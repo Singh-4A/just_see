@@ -1,10 +1,17 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  Suspense,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import "./App.css";
-import ProgressBar from "./progress";
+// import ProgressBar from "./progress";
+import Todo from "./Todo/todo";
+import Navbar from "./nabvar/Navbar";
 
 function App() {
   // State for progress bar value
-  const [value, setValue] = useState(0);
   // Ref to store interval ID for cleanup
   // const intervalId = useRef(null);
 
@@ -23,21 +30,6 @@ function App() {
     }
     return result;
   };
-
-  // Auto-increment progress bar on mount (currently commented out)
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setValue((value) => {
-        if (value >= 100) {
-          clearInterval(intervalId);
-          return 100;
-        } else {
-          return value + 1;
-        }
-      });
-    }, 100);
-    return () => clearInterval(intervalId);
-  }, []);
 
   const parentStyle = {
     display: "flex",
@@ -118,130 +110,120 @@ function App() {
     setVisible(false);
   }
 
+  const peakElement = [1, 2, 3, 4, 9, 5, 6, 90];
+
+  function peak(arr) {
+    const num = arr.length;
+    if (num === 0) return 1;
+    for (let i = 0; i < num; i++) {
+      const left = i === 0 || arr[i] >= arr[i - 1];
+      const right = i === -num || arr[i] >= arr[i + 1];
+      if (left && right) {
+        return arr[i];
+      }
+    }
+
+    return -1;
+  }
+
+  console.log(peak(peakElement));
+
+  const array1 = [1, 2, 3, 4];
+
+  // 0 + 1 + 2 + 3 + 4
+  const initialValue = 0;
+  const sumWithInitial = array1.reduce(
+    (accumulator, currentValue) => accumulator + currentValue,
+    initialValue
+  );
+
+  // Expected output: 10
+
+  // Count frequency of elements in array
+
+  const countFrequency = [
+    "apple",
+    "mango",
+    "apple",
+    "mango",
+    "apple",
+    "apple",
+    "mango",
+  ].reduce((accumulator, currentItem) => {
+    accumulator[currentItem] = (accumulator[currentItem] || 0) + 1;
+    return accumulator;
+  }, {});
+
+  function string(value) {
+    let reverse = "";
+    for (let i = value.length - 1; i > 0; i--) {
+      reverse += value[i];
+    }
+    return reverse;
+  }
+
+  const flatten = [1, [2], [4, [5, [6]]]];
+
+  function flattenArray(array) {
+    const result = [];
+    if (Array.isArray(array)) {
+      array.map((item) => result.push(...flattenArray(item)));
+    }else{
+      result.push(array)
+    }
+    return result
+  }
+
+  console.log(flattenArray(flatten));
+
   return (
     <>
+      <Navbar />
       {/* Progress Bar Section */}
-      <div style={parentStyle}>
-        <ProgressBar value={value} />
-        {value < 100 ? "Loading" : "Complete"}
-      </div>
 
       {/* Infinite Scroll Section */}
       <div style={parentStyle}>
-        <div
-          onScroll={onScrollHandler}
-          style={{
-            height: "300px",
-            overflow: "auto",
-            marginTop: "20px",
-            width: "300px",
-            alignItems: "center",
-            textAlign: "center",
-          }}
-        >
-          {list.myMap((item, i) => {
-            return (
-              <li
-                key={i}
-                style={{
-                  backgroundColor: "beige",
-                  listStyle: "none",
-                  border: "1px solid white",
-                  height: "30px",
-                }}
-              >
-                {i + 1}unique
-              </li>
-            );
-          })}
-        </div>
-        {loading && "Loading"}
-      </div>
-
-      {/* Todo List Section */}
-      <div
-        style={{
-          width: "300px",
-          margin: "auto",
-          background: "blue",
-          height: "300px",
-          overflow: "auto",
-          borderRadius: "30px",
-        }}
-      >
-        {/* Todo Input Field */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            marginTop: "20px",
-          }}
-        >
-          <div>
-            <input
-              type="text"
-              value={visible ? editText : inputValue}
-              onChange={(e) =>
-                visible
-                  ? setEditText(e.target.value)
-                  : setInputValue(e.target.value)
-              }
-            />
-          </div>
-          <div>
-            <button onClick={() => addTodoHandler()}>
-              {!visible ? "Add Todo" : "Save Todo"}
-            </button>
-          </div>
-        </div>
-
-        {/* Todo List Items */}
-        <div>
-          {addTodo.myMap((item, index) => {
-            return (
-              <>
-                <div
+        <div style={{ display: "flex", alignItems: "center", gap: 15 }}>
+          <div
+            onScroll={onScrollHandler}
+            style={{
+              height: "300px",
+              overflow: "auto",
+              marginTop: "20px",
+              width: "300px",
+              alignItems: "center",
+              textAlign: "center",
+            }}
+          >
+            {list.myMap((item, i) => {
+              return (
+                <li
+                  key={i}
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "10px",
-                    marginTop: "10px",
                     backgroundColor: "beige",
-                    width: 255,
-                    marginLeft: "20px",
+                    listStyle: "none",
+                    border: "1px solid white",
+                    height: "30px",
                   }}
                 >
-                  <div
-                    style={{
-                      width: "120px",
-                    }}
-                  >
-                    {item}
-                  </div>
-                  <div>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        e.preventDefault();
-                        deleteTodoHandler(index);
-                      }}
-                    >
-                      Delete
-                    </button>
-                  </div>
-                  <div>
-                    <button onClick={() => editTodoListHandler(index)}>
-                      Edit
-                    </button>
-                  </div>
-                </div>
-              </>
-            );
-          })}
+                  {i + 1}unique
+                </li>
+              );
+            })}
+            {loading && "Loading"}
+          </div>
+          <Todo
+            addTodo={addTodo}
+            inputValue={inputValue}
+            setEditText={setEditText}
+            setInputValue={setInputValue}
+            addTodoHandler={addTodoHandler}
+            editText={editText}
+            deleteTodoHandler={deleteTodoHandler}
+            editTodoListHandler={editTodoListHandler}
+            visible={visible}
+          />
         </div>
-
-
       </div>
     </>
   );

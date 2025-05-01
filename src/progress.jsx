@@ -4,7 +4,8 @@ function ProgressBar({ value = 0 }) {
   const [progressValue, setProgressValue] = useState(value);
 
   useEffect(() => {
-    setProgressValue(Math.min(100, Math.max(value, 0)));
+    setProgressValue(Math.min(100,Math.max(value,0)))
+  
   }, [value]);
 
   return (
