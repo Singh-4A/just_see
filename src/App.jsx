@@ -168,13 +168,28 @@ function App() {
     const result = [];
     if (Array.isArray(array)) {
       array.map((item) => result.push(...flattenArray(item)));
-    }else{
-      result.push(array)
+    } else {
+      result.push(array);
     }
-    return result
+    return result;
   }
 
-  console.log(flattenArray(flatten));
+  const duplicate = [1, 2, 2, 3, 4, 5, 6, 7, 7, 7, 8];
+
+  const result = [];
+  for (let i = 0; i < duplicate.length; i++) {
+    if (!result.includes(duplicate[i])) {
+      result.push(duplicate[i]);
+    }
+  }
+
+  const findDuplicate = duplicate.filter(
+    (item, i) => i !== duplicate.indexOf(item)
+  );
+  console.log(findDuplicate, "just");
+
+
+
 
   return (
     <>
