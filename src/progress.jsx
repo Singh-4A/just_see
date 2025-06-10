@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import "./app.css";
 
 function ProgressBar({ value }) {
   const [progressValue, setProgressValue] = useState(value);
