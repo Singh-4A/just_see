@@ -16,7 +16,7 @@ const MainTodo = () => {
     loading: getLoading = false,
     data: todosFromApi = [],
     totalCount,
-  } = useSelector((state) => state.getTodoListState) ?? {};
+  } = useSelector((state) => state.getTodoListState) ?? { data: [] };
   const { status = "" } = useSelector((state) => state.deleteTodoState) ?? {};
   const [inputValue, setInputValue] = useState("");
   // store current input value for in array using this state
@@ -95,12 +95,14 @@ const MainTodo = () => {
     );
     setAddTodoValue([]);
   };
+
+  
   useEffect(() => {
-    if (!getLoading) {
+    if (!getLoading && Array.isArray(todosFromApi)) {
       setAddTodoValue((prev) => [...prev, ...todosFromApi]);
     }
-  }, [getLoading]);
-
+    // Optionally else: log a warning if data format is invalid
+  }, [getLoading, todosFromApi]);
   useEffect(() => {
     dispatch(getTodoList({ limit: 10, page }));
   }, [page, dispatch]);

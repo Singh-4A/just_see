@@ -29,7 +29,7 @@ function getTodoListReducer(state = initialState, action) {
       return {
         state,
         data: null,
-        loading: false,
+        loading: "Error",
       };
 
     case GET_RESET_TODO_LIST_DATA:
