@@ -4,7 +4,6 @@ import TodoList from "../../Todo/todo";
 import { useDispatch, useSelector } from "react-redux";
 import { createTodo } from "../../redux/Action/action";
 import {
-  getResetTodoList,
   getTodoList,
 } from "../../redux/Action/getTodoAction";
 import { deleteTodo } from "../../redux/Action/deleteTodo";
