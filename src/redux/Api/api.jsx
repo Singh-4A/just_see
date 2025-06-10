@@ -4,7 +4,7 @@ export const createTodoApi = async (props) => {
   try {
     const createTodo = await axios({
       method: "post",
-      url: "http://localhost:500/todo",
+      url: `${process.env.API_END_POINT}todo`,
       data: {
         name: props.inputValue,
       },

@@ -6,7 +6,7 @@ export const editTodoApi = async (props) => {
   try {
     const response = await axios({
       method: "put",
-      url: `http://localhost:500/todo/${id}`,
+      url: `${process.env.API_END_POINT}todo/${id}`,
       data: {
         name: name,
       },

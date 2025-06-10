@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const getTodoApi = async (params) => {
   try {
-    const getList = await axios.get("http://localhost:500/todo", {
+    const getList = await axios.get(`${process.env.API_END_POINT}todo`, {
       params: params,
     });
 
