@@ -1,31 +1,28 @@
-import React, { Suspense, useEffect, useState } from "react";
-
-const Progress = React.lazy(() => import("./progress"));
+import React, { lazy, Suspense, useEffect, useState } from "react";
+const ProgressBar = lazy(() => import("../src/.//progress"));
 export const ProgressMain = () => {
   const [value, setValue] = useState(0);
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    let timeOutId = setInterval(() => {
       setValue((prev) => {
-        if (prev >= 100) {
-          clearInterval(interval);
-          return 100;
-        } else {
+        if (prev < 100) {
           return prev + 1;
+        } else {
+          clearTimeout(timeOutId);
+
+          return 100;
         }
       });
     }, 100);
-    return () => clearInterval(interval);
-  }, []);
+    return () => clearTimeout(timeOutId);
+  }, [value]);
 
   return (
-    <div>
-      <Suspense fallback={<div>Loading...</div>}>
-        <div>
-          <Progress value={value} />
-          {value < 100 ? "Loading" : "Complete"}
-        </div>
+    <>
+      <Suspense fallback={<div>Loading....</div>}>
+        <ProgressBar value={value} />
       </Suspense>
-    </div>
+    </>
   );
 };

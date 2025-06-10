@@ -1,7 +1,9 @@
-import React from "react";
 import { Link, Outlet } from "react-router-dom";
 
 const Layout = () => {
+  const userDataString = localStorage.getItem("userData");
+  const userData = JSON.parse(userDataString);
+
   return (
     <>
       <nav
@@ -29,24 +31,45 @@ const Layout = () => {
               cursor: "pointer",
             }}
           >
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/traffic"> Traffic Light</Link>
-            </li>
-            <li>
-              <Link to="/about"> Infinity Scroll</Link>
-            </li>{" "}
-            <li>
-              <Link to="/"> Todo</Link>
-            </li>
-            <li>
-              <Link to="/stopwatch"> Stopwatch</Link>
-            </li>
-            <li>
-              <Link to="/progress">Progress</Link>
-            </li>
+            {!!userData?.name ? (
+              <>
+                <li>
+                  <Link to="/">Home</Link>
+                </li>
+                <li>
+                  <Link to="/traffic"> Traffic Light</Link>
+                </li>
+                <li>
+                  <Link to="/scroll"> Infinity Scroll</Link>
+                </li>{" "}
+                <li>
+                  <Link to="todo"> Todo</Link>
+                </li>
+                <li>
+                  <Link to="/stopwatch"> Stopwatch</Link>
+                </li>
+                <li>
+                  <Link to="/progress">Progress</Link>
+                </li>
+                <li>
+                  <Link to="/drag"> Drag</Link>
+                </li>
+                <li>
+                  <Link
+                    onClick={() => {
+                      localStorage.clear();
+                      window.open("/login");
+                    }}
+                  >
+                    Logout
+                  </Link>
+                </li>
+              </>
+            ) : (
+              <li>
+                <Link to="/login">Login</Link>
+              </li>
+            )}
           </ul>
         </div>
       </nav>

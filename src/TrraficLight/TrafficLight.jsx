@@ -1,55 +1,97 @@
 import React, { useEffect, useState } from "react";
 import "./traffic.css";
-
-function TrafficLight() {
+export const TrafficLight = () => {
   const trafficData = [
-    { color: "red", time: 1000, startDisplayOrder: 2, order: 1 },
-    { color: "green", time: 1000, startDisplayOrder: 1, order: 2 },
-    { color: "yellow", time: 1000, startDisplayOrder: 3, order: 3 },
+    {
+      color: "red",
+      order: 1,
+      sequence: 2,
+      time: 1000,
+    },
+    {
+      color: "blue",
+      order: 2,
+      sequence: 2,
+      time: 1000,
+    },
+    {
+      color: "yellow",
+      order: 3,
+      sequence: 1,
+      time: 1000,
+    },
+       {
+      color: "white",
+      order: 4,
+      sequence: 4,
+      time: 1000,
+    },
   ];
 
-  const startLightOrder = (random) =>
-    random.toSorted((a, b) => a.startDisplayOrder - b.startDisplayOrder);
+  function orderLight(random) {
+    return random.toSorted((a, b) => a.order - b.order);
+  }
 
-  const currentStartOrder = (random) =>
-    random.toSorted((a, b) => a.order - b.order);
+  function sequenceLightOrder(random) {
+    return random.toSorted((a, b) => a.sequence - b.sequence);
+  }
 
-  const [startOrder, setStartOrder] = useState(startLightOrder(trafficData));
-  const [order, setOrder] = useState(currentStartOrder(trafficData));
+  const [order,/*setOrder*/] = useState(orderLight(trafficData));
+  const [sequenceOrder, /*setSequenceOrder*/] = useState(
+    sequenceLightOrder(trafficData)
+  );
+
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    const time = setTimeout(() => {
+    let timeOutId = setTimeout(() => {
       setCurrentIndex((prev) => (prev + 1) % order.length);
     }, order[currentIndex].time);
-
-    return () => clearTimeout(time);
+    return () => clearTimeout(timeOutId);
   }, [order, currentIndex]);
 
-  const active = startOrder[currentIndex].order;
-
-  
+  const color = sequenceOrder[currentIndex];
 
   return (
-    <div className="traffic_container">
-      <div className="traffic">
-        {order.map((item) => (
-          <Light color={active === item.order ? item.color : "gray"} />
-        ))}
+    <div
+      style={{
+        margin: "auto",
+        width: "fit-content",
+        backgroundColor: "black",
+        padding: 10,
+        borderRadius: 15,
+        marginTop: 10,
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 5,
+        }}
+      >
+        {order.map((item) => {
+          return (
+            <Light color={color.color === item.color ? item.color : "gray"} />
+          );
+        })}
       </div>
     </div>
   );
-}
+};
 
 function Light({ color }) {
   return (
     <div
       style={{
+        width: 40,
+        height: 40,
+        borderRadius: 50,
         backgroundColor: color,
       }}
-      className="traffic_light"
     ></div>
   );
 }
-
 export default TrafficLight;
+
+

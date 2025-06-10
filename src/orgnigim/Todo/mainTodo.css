@@ -1,0 +1,12 @@
+.main_todo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: auto;
+}
+
+.todo_box {
+  text-align: center;
+}
+.todo {
+}

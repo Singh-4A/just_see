@@ -1,9 +1,43 @@
 
-@import "tailwindcss";
+@import "tailwindcss/base";
+
+@import "tailwindcss/components";
+
+@import "tailwindcss/utilities";
+
+
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
 body{
   padding: 0;
   box-sizing: border-box;
   margin: 0;
 }
 
+.progress{
+  width: 400px;
+  border: 1px solid black;
+  border-radius: 20px;
+  height: 40px;
+  margin: auto;
+  margin-top: 10px;
+  position: relative;
+}
+
+.value_box{
+  position: absolute;
+  transform: translate(-50% -50%);
+  left: 50%;
+  top: 25%;
+}
+
+.progress_fill_box{
+  height: 100%;
+  width: 400px;
+  border-radius: 20px;
+  background-color: rgb(36, 202, 105);
+}
 

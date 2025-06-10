@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -8,15 +8,15 @@ import {
 import Layout from "./Layout";
 import { ProgressMain } from "../ProgressMain";
 import TrafficLight from "../TrraficLight/TrafficLight";
+import Scroll from "../scroll/Scroll";
+import Login from "../Login/login";
+import DragAndDropList from "../draganddrop/drangAndDrop";
 
-const Stopwatch=lazy(()=>import("../Stopwatch/Stopwatch"))
+const Stopwatch = lazy(() => import("../Stopwatch/Stopwatch"));
+const MainTodo = lazy(() => import("../orgnigim/Todo/MainTodo"));
 
 function Home() {
   return <h2>Home21212</h2>;
-}
-
-function About() {
-  return <h2>About</h2>;
 }
 
 function Users() {
@@ -24,16 +24,22 @@ function Users() {
 }
 
 export default function Navbar() {
+
+;
+
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/traffic" element={<TrafficLight />} />
-            <Route path="/about" element={<About />} />
+            <Route path="/scroll" element={<Scroll />} />
             <Route path="/progress" element={<ProgressMain />} />
             <Route path="/stopwatch" element={<Stopwatch />} />
+            <Route path="/todo" element={<MainTodo />} />
+            <Route  path="/drag" element={<DragAndDropList/>}/>
             <Route path="*" element={<Users />} />
           </Route>
         </Routes>

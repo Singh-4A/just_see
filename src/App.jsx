@@ -1,6 +1,7 @@
 import React, {
   Suspense,
   useCallback,
+  useContext,
   useEffect,
   useRef,
   useState,
@@ -9,6 +10,9 @@ import "./App.css";
 // import ProgressBar from "./progress";
 import Todo from "./Todo/todo";
 import Navbar from "./nabvar/Navbar";
+import { createContextData } from "./contextapi/contextApi";
+import { createPortal } from "react-dom";
+import { Modal } from "./modal/modal";
 
 function App() {
   // State for progress bar value
@@ -16,99 +20,18 @@ function App() {
   // const intervalId = useRef(null);
 
   // List used for infinite scroll
-  const [list, setList] = useState([...new Array(50)]);
-  const [loading, setLoading] = useState(false);
 
   // Custom map function added to Array prototype (use with caution in production)
-  Array.prototype.myMap = function (callback) {
-    if (typeof callback !== "function") {
-      return TypeError("myMap error:undefined is myMap function");
-    }
-    const result = [];
-    for (let i = 0; i < this.length; i++) {
-      result.push(callback(this[i], i, this));
-    }
-    return result;
-  };
-
-  const parentStyle = {
-    display: "flex",
-    justifyContent: "center",
-    flexDirection: "column",
-    alignItems: "center",
-    width: "100%",
-  };
-
-  const THRESHOLD = 20;
-
-  // Handler for infinite scroll when user reaches bottom
-  const onScrollHandler = (event) => {
-    const scrollHeight = event.target.scrollHeight;
-    const scrollTop = event.target.scrollTop;
-    const clientHeight = event.target.clientHeight;
-
-    const remainingHeight = scrollHeight - (scrollTop + clientHeight);
-    if (remainingHeight < THRESHOLD) {
-      setTimeout(() => {
-        setList((prev) => [...prev, ...new Array(10)]);
-        setLoading(true);
-      }, 300);
-    }
-    setLoading(false);
-  };
-
-  // Todo app state
-  const [inputValue, setInputValue] = useState("");
-  const [addTodo, setAddTodo] = useState([]);
-  const [editIndex, setEditIndex] = useState(null);
-  const [editText, setEditText] = useState("");
-  const [visible, setVisible] = useState(false);
-
-  // Handler to add a new todo or save an edited one
-
-  const addTodoHandler = () => {
-    if (inputValue?.trim() !== "" && !editText) {
-      setInputValue("");
-      setAddTodo([...addTodo, inputValue]);
-    } else {
-      saveTodo(); // Save the edited todo
-    }
-  };
-
-  // Delete todo by filtering out the selected index
-  const deleteTodoHandler = useCallback(
-    (index) => {
-      const filterTodoList = addTodo.filter((_, i) => i !== index);
-      setAddTodo(filterTodoList);
-      setEditIndex("");
-      setEditText("");
-      setVisible(false);
-    },
-    [addTodo]
-  );
-  ("");
-
-  // Load the selected todo into the input field for editing
-  const editTodoListHandler = useCallback(
-    (index) => {
-      const currentEditText = addTodo.find((_, i) => i === index);
-      setEditText(currentEditText);
-      setEditIndex(index);
-      setVisible(true);
-    },
-    [addTodo]
-  );
-
-  // Save the edited todo back to the list
-  function saveTodo() {
-    const updatedTodoList = addTodo.map((item, i) =>
-      editIndex === i ? editText : item
-    );
-    setAddTodo(updatedTodoList);
-    setEditText("");
-    setEditIndex(null);
-    setVisible(false);
-  }
+  // Array.prototype.myMap = function (callback) {
+  //   if (typeof callback !== "function") {
+  //     return TypeError("myMap error:undefined is myMap function");
+  //   }
+  //   const result = [];
+  //   for (let i = 0; i < this.length; i++) {
+  //     result.push(callback(this[i], i, this));
+  //   }
+  //   return result;
+  // };
 
   const peakElement = [1, 2, 3, 4, 9, 5, 6, 90];
 
@@ -125,8 +48,6 @@ function App() {
 
     return -1;
   }
-
-  console.log(peak(peakElement));
 
   const array1 = [1, 2, 3, 4];
 
@@ -149,18 +70,11 @@ function App() {
     "apple",
     "apple",
     "mango",
-  ].reduce((accumulator, currentItem) => {
-    accumulator[currentItem] = (accumulator[currentItem] || 0) + 1;
+  ].reduce((accumulator, currentValue) => {
+    accumulator[currentValue] = (accumulator[currentValue] || 0) + 1;
     return accumulator;
   }, {});
-
-  function string(value) {
-    let reverse = "";
-    for (let i = value.length - 1; i > 0; i--) {
-      reverse += value[i];
-    }
-    return reverse;
-  }
+  console.log(countFrequency);
 
   const flatten = [1, [2], [4, [5, [6]]]];
 
@@ -186,61 +100,181 @@ function App() {
   const findDuplicate = duplicate.filter(
     (item, i) => i !== duplicate.indexOf(item)
   );
-  console.log(findDuplicate, "just");
+     // let obj = {};
 
+      // for (let i = 0; i < duplicateValue.length; i++) {
+      //   if (obj[duplicateValue[i]] !== undefined) {
+      //     obj[duplicateValue[i]] = obj[duplicateValue[i]] + 1;
+      //   } else {
+      //     obj[duplicateValue[i]] = 1;
+      //   }
+      // }
 
+      // for (key in obj) {
+      //   const data = `${key}-${obj[key]} `;
+      //   console.log(data, "obj");
+      // }
+  
 
+  // console.log(resultObj, "resultObj");
+
+  const parentStyle = {
+    display: "flex",
+    justifyContent: "center",
+    flexDirection: "column",
+    alignItems: "center",
+    width: "100%",
+  };
+
+  const {
+    darkTheme,
+    darkThemeHandler,
+    countIncrement,
+    countDecrement,
+    currentValue,
+  } = useContext(createContextData);
+
+  // function reverseString(value) {
+  //   let result = "";
+  //   for (let i = value.length - 1; i > 0; i--) {
+  //     result += value[i];
+  //   }
+  //   return result;
+  // }
+
+  // console.log(reverseString("Hello Arjuna"));
+
+  // function firstNonRepeatingChar(str) {
+  //   const count = {};
+
+  //   for (let char of str) {
+  //     count[char] = (count[char] || 0) + 1;
+  //   }
+
+  //   for (let char of str) {
+  //     if (count[char] === 1) {
+  //       return char;
+  //     }
+  //   }
+
+  //   return null; // or return '_' or whatever indicates no non-repeating char
+  // }
+
+  // console.log(firstNonRepeatingChar(["hhlloy"]));
+
+  // const firstSortedArray = [3, 4, 5, 1, 6, 9, 6];
+  // const secondSortedArray = [100, 34, 67, 90];
+  // const merge = [...firstSortedArray, ...secondSortedArray].sort(
+  //   (a, b) => a - b
+  // );
+  // const [openModal, setOpenModal] = useState(false);
+
+  // const openModalHandler = useCallback(() => {
+  //   setOpenModal(true);
+  // }, [open]);
+
+  // i am gonna write Polyfills for filter method
+  // Array.prototype.myFilter = function (callback) {
+  //   if (typeof callback !== "function") {
+  //     throw console.error("my filter is not function");
+  //   }
+
+  //   let result = [];
+  //   for (let i = 0; i < this.length; i++) {
+  //     if (callback(this[i], i, this)) result.push(this[i]);
+  //   }
+  //   return result;
+  // };
+  // const array = [1, 2, 3, 4, 5];
+
+  // const test = array.myFilter((acc) => {
+  //   return acc > 2;
+  // });
+
+  //  i am gonna write here reducer
+
+  // Array.prototype.myReduce = function (cb, initialValue) {
+  //   let accumulator = initialValue;
+
+  //   for (let i = 0; i < this.length; i++) {
+  //     accumulator = initialValue ? cb(accumulator, this[i], i, array) : this[i];
+  //   }
+
+  //   return accumulator;
+  // };
+
+  // const reduce = array.myReduce((acc, currentValue, i, array) => {
+  //   return acc + currentValue;
+  // }, 1);
 
   return (
-    <>
-      <Navbar />
-      {/* Progress Bar Section */}
-
-      {/* Infinite Scroll Section */}
+    <div
+      style={{
+        backgroundColor: darkTheme ? "black" : "white",
+        height: "100vh",
+      }}
+    >
+      <Navbar />/{/* Infinite Scroll Section */}
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          openModalHandler();
+        }}
+      >
+        open modal
+      </button>
       <div style={parentStyle}>
-        <div style={{ display: "flex", alignItems: "center", gap: 15 }}>
-          <div
-            onScroll={onScrollHandler}
-            style={{
-              height: "300px",
-              overflow: "auto",
-              marginTop: "20px",
-              width: "300px",
-              alignItems: "center",
-              textAlign: "center",
-            }}
-          >
-            {list.myMap((item, i) => {
-              return (
-                <li
-                  key={i}
-                  style={{
-                    backgroundColor: "beige",
-                    listStyle: "none",
-                    border: "1px solid white",
-                    height: "30px",
-                  }}
-                >
-                  {i + 1}unique
-                </li>
-              );
-            })}
-            {loading && "Loading"}
-          </div>
-          <Todo
-            addTodo={addTodo}
-            inputValue={inputValue}
-            setEditText={setEditText}
-            setInputValue={setInputValue}
-            addTodoHandler={addTodoHandler}
-            editText={editText}
-            deleteTodoHandler={deleteTodoHandler}
-            editTodoListHandler={editTodoListHandler}
-            visible={visible}
-          />
-        </div>
+        <button
+          style={{
+            backgroundColor: darkTheme ? "white" : "black",
+            color: darkTheme ? "black" : "white",
+            height: 50,
+            width: 100,
+            border: "1px solid white",
+            borderRadius: 20,
+          }}
+          onClick={darkThemeHandler}
+        >
+          Dark Theme
+        </button>
+        <button
+          style={{
+            backgroundColor: darkTheme ? "white" : "black",
+            color: darkTheme ? "black" : "white",
+            height: 50,
+            width: 100,
+            border: "1px solid white",
+            borderRadius: 20,
+          }}
+          onClick={(e) => {
+            e.stopPropagation();
+            e.preventDefault();
+            countIncrement();
+          }}
+        >
+          Increment
+        </button>
+        <button
+          style={{
+            backgroundColor: darkTheme ? "white" : "black",
+            color: darkTheme ? "black" : "white",
+            height: 50,
+            width: 100,
+            border: "1px solid white",
+            borderRadius: 20,
+          }}
+          onClick={currentValue >= 1 ? countDecrement : undefined}
+        >
+          Decrement
+        </button>
+        {currentValue}
       </div>
-    </>
+      {/* {openModal &&
+        createPortal(
+          <Modal setOpenModal={setOpenModal} />,
+          document.getElementById("create_portal")
+        )} */}
+    </div>
   );
 }
 

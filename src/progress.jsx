@@ -1,44 +1,46 @@
 import { useState, useEffect } from "react";
+import "./app.css";
 
-function ProgressBar({ value = 0 }) {
+function ProgressBar({ value }) {
   const [progressValue, setProgressValue] = useState(value);
 
   useEffect(() => {
-    setProgressValue(Math.min(100,Math.max(value,0)))
-  
+    setProgressValue(Math.min(100, Math.max(value, 0)));
   }, [value]);
 
   return (
     <div
       style={{
         position: "relative",
+        margin: "auto",
         width: "400px",
-        height: "30px",
-        borderRadius: "15px",
+        height: 50,
         border: "1px solid black",
-        marginTop: "10px",
+        borderRadius: 30,
+        marginTop: 10,
       }}
     >
       <div
         style={{
-          width: `${progressValue}%`,
-          height: "100%",
-          borderRadius: "15px",
-          background: "#4caf50",
-        }}
-      />
-      <span
-        style={{
           position: "absolute",
-          top: "50%",
+          transform: "translate(-50% -50%)",
+          top: "30%",
           left: "50%",
-          transform: "translate(-50%,-50%)",
-          color: progressValue < 49 ? "black" : "#fff",
-          fontWeight: "bold",
+          color: progressValue >50 ? "white" : "black",
+          zIndex:1000
         }}
       >
-        {progressValue} %
-      </span>
+        {progressValue}%
+      </div>
+      <div
+        style={{
+          height: "100%",
+          backgroundColor: "blue",
+          width: `${progressValue}%`,
+          position: "absolute",
+          borderRadius: 20,
+        }}
+      />
     </div>
   );
 }

@@ -1,0 +1,18 @@
+.container {
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  top: 0px;
+  background-color: rgb(180, 129, 28);
+}
+.modal {
+  position: fixed;
+  width: 800px;
+  height: 300px;
+  border: 1px solid black;
+  border-radius: 10px;
+  transform: translate(-50%,50%);
+  top: 10%;
+  left: 50%;
+  background-color: rgb(237, 241, 241);
+}
