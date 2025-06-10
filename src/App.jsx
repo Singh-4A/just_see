@@ -1,18 +1,11 @@
-import React, {
-  Suspense,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { useContext } from "react";
 import "./App.css";
 // import ProgressBar from "./progress";
-import Todo from "./Todo/todo";
+// import Todo from "./Todo/todo";
 import Navbar from "./nabvar/Navbar";
 import { createContextData } from "./contextapi/contextApi";
-import { createPortal } from "react-dom";
-import { Modal } from "./modal/modal";
+// import { createPortal } from "react-dom";
+// import { Modal } from "./modal/modal";
 
 function App() {
   // State for progress bar value
@@ -33,88 +26,86 @@ function App() {
   //   return result;
   // };
 
-  const peakElement = [1, 2, 3, 4, 9, 5, 6, 90];
+  // const peakElement = [1, 2, 3, 4, 9, 5, 6, 90];
 
-  function peak(arr) {
-    const num = arr.length;
-    if (num === 0) return 1;
-    for (let i = 0; i < num; i++) {
-      const left = i === 0 || arr[i] >= arr[i - 1];
-      const right = i === -num || arr[i] >= arr[i + 1];
-      if (left && right) {
-        return arr[i];
-      }
-    }
+  // function peak(arr) {
+  //   const num = arr.length;
+  //   if (num === 0) return 1;
+  //   for (let i = 0; i < num; i++) {
+  //     const left = i === 0 || arr[i] >= arr[i - 1];
+  //     const right = i === -num || arr[i] >= arr[i + 1];
+  //     if (left && right) {
+  //       return arr[i];
+  //     }
+  //   }
 
-    return -1;
-  }
+  //   return -1;
+  // }
 
-  const array1 = [1, 2, 3, 4];
+  // const array1 = [1, 2, 3, 4];
 
-  // 0 + 1 + 2 + 3 + 4
-  const initialValue = 0;
-  const sumWithInitial = array1.reduce(
-    (accumulator, currentValue) => accumulator + currentValue,
-    initialValue
-  );
+  // // 0 + 1 + 2 + 3 + 4
+  // const initialValue = 0;
+  // const sumWithInitial = array1.reduce(
+  //   (accumulator, currentValue) => accumulator + currentValue,
+  //   initialValue
+  // );
 
   // Expected output: 10
 
   // Count frequency of elements in array
 
-  const countFrequency = [
-    "apple",
-    "mango",
-    "apple",
-    "mango",
-    "apple",
-    "apple",
-    "mango",
-  ].reduce((accumulator, currentValue) => {
-    accumulator[currentValue] = (accumulator[currentValue] || 0) + 1;
-    return accumulator;
-  }, {});
-  console.log(countFrequency);
+  // const countFrequency = [
+  //   "apple",
+  //   "mango",
+  //   "apple",
+  //   "mango",
+  //   "apple",
+  //   "apple",
+  //   "mango",
+  // ].reduce((accumulator, currentValue) => {
+  //   accumulator[currentValue] = (accumulator[currentValue] || 0) + 1;
+  //   return accumulator;
+  // }, {});
 
-  const flatten = [1, [2], [4, [5, [6]]]];
+  // const flatten = [1, [2], [4, [5, [6]]]];
 
-  function flattenArray(array) {
-    const result = [];
-    if (Array.isArray(array)) {
-      array.map((item) => result.push(...flattenArray(item)));
-    } else {
-      result.push(array);
-    }
-    return result;
-  }
+  // function flattenArray(array) {
+  //   const result = [];
+  //   if (Array.isArray(array)) {
+  //     array.map((item) => result.push(...flattenArray(item)));
+  //   } else {
+  //     result.push(array);
+  //   }
+  //   return result;
+  // }
 
-  const duplicate = [1, 2, 2, 3, 4, 5, 6, 7, 7, 7, 8];
+  // const duplicate = [1, 2, 2, 3, 4, 5, 6, 7, 7, 7, 8];
 
-  const result = [];
-  for (let i = 0; i < duplicate.length; i++) {
-    if (!result.includes(duplicate[i])) {
-      result.push(duplicate[i]);
-    }
-  }
+  // const result = [];
+  // for (let i = 0; i < duplicate.length; i++) {
+  //   if (!result.includes(duplicate[i])) {
+  //     result.push(duplicate[i]);
+  //   }
+  // }
 
-  const findDuplicate = duplicate.filter(
-    (item, i) => i !== duplicate.indexOf(item)
-  );
-     // let obj = {};
+  // const findDuplicate = duplicate.filter(
+  //   (item, i) => i !== duplicate.indexOf(item)
+  // );
+  // let obj = {};
 
-      // for (let i = 0; i < duplicateValue.length; i++) {
-      //   if (obj[duplicateValue[i]] !== undefined) {
-      //     obj[duplicateValue[i]] = obj[duplicateValue[i]] + 1;
-      //   } else {
-      //     obj[duplicateValue[i]] = 1;
-      //   }
-      // }
+  // for (let i = 0; i < duplicateValue.length; i++) {
+  //   if (obj[duplicateValue[i]] !== undefined) {
+  //     obj[duplicateValue[i]] = obj[duplicateValue[i]] + 1;
+  //   } else {
+  //     obj[duplicateValue[i]] = 1;
+  //   }
+  // }
 
-      // for (key in obj) {
-      //   const data = `${key}-${obj[key]} `;
-      //   console.log(data, "obj");
-      // }
-  
+  // for (key in obj) {
+  //   const data = `${key}-${obj[key]} `;
+  //   console.log(data, "obj");
+  // }
 
   // console.log(resultObj, "resultObj");
 
@@ -215,60 +206,15 @@ function App() {
       }}
     >
       <Navbar />/{/* Infinite Scroll Section */}
-      <button
+      {/* <button
         onClick={(e) => {
           e.stopPropagation();
           openModalHandler();
         }}
       >
         open modal
-      </button>
-      <div style={parentStyle}>
-        <button
-          style={{
-            backgroundColor: darkTheme ? "white" : "black",
-            color: darkTheme ? "black" : "white",
-            height: 50,
-            width: 100,
-            border: "1px solid white",
-            borderRadius: 20,
-          }}
-          onClick={darkThemeHandler}
-        >
-          Dark Theme
-        </button>
-        <button
-          style={{
-            backgroundColor: darkTheme ? "white" : "black",
-            color: darkTheme ? "black" : "white",
-            height: 50,
-            width: 100,
-            border: "1px solid white",
-            borderRadius: 20,
-          }}
-          onClick={(e) => {
-            e.stopPropagation();
-            e.preventDefault();
-            countIncrement();
-          }}
-        >
-          Increment
-        </button>
-        <button
-          style={{
-            backgroundColor: darkTheme ? "white" : "black",
-            color: darkTheme ? "black" : "white",
-            height: 50,
-            width: 100,
-            border: "1px solid white",
-            borderRadius: 20,
-          }}
-          onClick={currentValue >= 1 ? countDecrement : undefined}
-        >
-          Decrement
-        </button>
-        {currentValue}
-      </div>
+      </button> */}
+   
       {/* {openModal &&
         createPortal(
           <Modal setOpenModal={setOpenModal} />,

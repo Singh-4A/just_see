@@ -1,8 +1,12 @@
+import { useContext } from "react";
 import { Link, Outlet } from "react-router-dom";
+import { createContextData } from "../contextapi/contextApi";
 
 const Layout = () => {
   const userDataString = localStorage.getItem("userData");
   const userData = JSON.parse(userDataString);
+
+  const { darkTheme, darkThemeHandler } = useContext(createContextData);
 
   return (
     <>
@@ -18,7 +22,7 @@ const Layout = () => {
             justifyContent: "end",
             alignItems: "end",
             padding: "20px",
-            backgroundColor: "bisque",
+            backgroundColor: !darkTheme ? "bisque" : "black",
             width: "100%",
           }}
         >
@@ -66,10 +70,26 @@ const Layout = () => {
                 </li>
               </>
             ) : (
-              <li>
-                <Link to="/login">Login</Link>
-              </li>
+              <>
+                <li>
+                  <Link to="/login">Login</Link>
+                </li>
+              </>
             )}
+            <li
+              style={{
+                backgroundColor: darkTheme ? "white" : "black",
+                color: darkTheme ? "black" : "white",
+                // height: 50,
+                // width: 100,
+                border: "1px solid white",
+                borderRadius: 20,
+              }}
+              onClick={darkThemeHandler}
+            >
+              {" "}
+              Dark Theme
+            </li>
           </ul>
         </div>
       </nav>

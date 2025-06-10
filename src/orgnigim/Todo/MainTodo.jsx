@@ -1,5 +1,5 @@
 import React, { memo, useCallback, useEffect, useState } from "react";
-import "./MainTodo.css";
+import "./mainTodo.css";
 import TodoList from "../../Todo/todo";
 import { useDispatch, useSelector } from "react-redux";
 import { createTodo } from "../../redux/Action/action";

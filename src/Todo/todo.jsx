@@ -7,7 +7,6 @@ const TodoList = ({
   autoScrollPaginationHandler,
   getLoading,
 }) => {
-  console.log(getLoading);
   return (
     <div
       onScroll={autoScrollPaginationHandler}
@@ -22,7 +21,7 @@ const TodoList = ({
         borderRadius: 4,
       }}
     >
-      { !getLoading && "loading"}
+      {/* {!getLoading && "loading"} */}
       {getLoading === "Error" && "Something went wrong!"}
 
       {/* <div class="flex flex-row flex-wrap justify-center  "> */}
