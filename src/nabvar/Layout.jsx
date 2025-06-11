@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import * as React from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, Router } from "react-router-dom";
 import { createContextData } from "../contextapi/contextApi";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -63,70 +63,77 @@ const Layout = () => {
   ];
   const settings = [
     {
-      path: "Login",
-    },
-    {
-      path: "Logout",
+      path: !userData ? "Login" : "Logout",
     },
   ];
+
+  function logoutUser() {
+    window.open("/login");
+    localStorage.clear();
+  }
+
   return (
     <>
       <AppBar position="static">
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleOpenNavMenu}
-                color="inherit"
-              >
-                <MenuIcon />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorElNav}
-                anchorOrigin={{
-                  vertical: "bottom",
-                  horizontal: "left",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "left",
-                }}
-                open={Boolean(anchorElNav)}
-                onClose={handleCloseNavMenu}
-                sx={{ display: { xs: "block", md: "none" } }}
-              >
-                {routePath.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Button
-                      key={page.path}
-                      component={Link}
-                      to={`/${page.path}`}
-                      sx={{ color: "black", display: "block" }}
-                    >
-                      {page.label ?? page.path}
-                    </Button>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
-            <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-              {routePath?.map((page) => (
-                <Button
-                  key={page.path}
-                  component={Link}
-                  to={`/${page.path}`}
-                  sx={{ my: 2, color: "white", display: "block" }}
+            {userData && (
+              <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleOpenNavMenu}
+                  color="inherit"
                 >
-                  {page.label ?? page.path}
-                </Button>
-              ))}
+                  <MenuIcon />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorElNav}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "left",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "left",
+                  }}
+                  open={Boolean(anchorElNav)}
+                  onClose={handleCloseNavMenu}
+                  sx={{ display: { xs: "block", md: "none" } }}
+                >
+                  {userData &&
+                    routePath.map((page) => (
+                      <MenuItem key={page} onClick={handleCloseNavMenu}>
+                        <Button
+                          key={page.path}
+                          component={Link}
+                          to={`/${page.path}`}
+                          sx={{ color: "black", display: "block" }}
+                        >
+                          {page.label ?? page.path}
+                        </Button>
+                      </MenuItem>
+                    ))}
+                </Menu>
+              </Box>
+            )}
+
+            <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+              {userData &&
+                routePath?.map((page) => (
+                  <Button
+                    key={page.path}
+                    component={Link}
+                    to={`/${page.path}`}
+                    sx={{ my: 2, color: "white", display: "block" }}
+                  >
+                    {page.label ?? page.path}
+                  </Button>
+                ))}
             </Box>
 
             <Box sx={{ flexGrow: 0 }}>
@@ -154,6 +161,7 @@ const Layout = () => {
                 {settings.map((page) => (
                   <MenuItem key={page} onClick={handleCloseNavMenu}>
                     <Button
+                      onClick={() => logoutUser()}
                       key={page.path}
                       component={Link}
                       to={`/${page.path}`}
@@ -165,7 +173,6 @@ const Layout = () => {
                 ))}
               </Menu>
             </Box>
-
           </Toolbar>
         </Container>
       </AppBar>
