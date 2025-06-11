@@ -6,7 +6,6 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
@@ -167,89 +166,6 @@ const Layout = () => {
               </Menu>
             </Box>
 
-            {/* <nav
-              style={{
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "end",
-                  alignItems: "end",
-                  padding: "20px",
-                  backgroundColor: !darkTheme ? "bisque" : "black",
-                  width: "100%",
-                }}
-              >
-                <ul
-                  style={{
-                    display: "flex",
-                    gap: "20px",
-                    color: "blue",
-                    fontWeight: 600,
-                    cursor: "pointer",
-                  }}
-                >
-                  {!!userData?.name ? (
-                    <>
-                      <li>
-                        <Link to="/">Home</Link>
-                      </li>
-                      <li>
-                        <Link to="/traffic"> Traffic Light</Link>
-                      </li>
-                      <li>
-                        <Link to="/scroll"> Infinity Scroll</Link>
-                      </li>{" "}
-                      <li>
-                        <Link to="todo"> Todo</Link>
-                      </li>
-                      <li>
-                        <Link to="/stopwatch"> Stopwatch</Link>
-                      </li>
-                      <li>
-                        <Link to="/progress">Progress</Link>
-                      </li>
-                      <li>
-                        <Link to="/drag"> Drag</Link>
-                      </li>
-                      <li>
-                        <Link
-                          onClick={() => {
-                            localStorage.clear();
-                            window.open("/login");
-                          }}
-                        >
-                          Logout
-                        </Link>
-                      </li>
-                    </>
-                  ) : (
-                    <>
-                      <li>
-                        <Link to="/login">Login</Link>
-                      </li>
-                    </>
-                  )}
-                  <li
-                    style={{
-                      backgroundColor: darkTheme ? "white" : "black",
-                      color: darkTheme ? "black" : "white",
-                      // height: 50,
-                      // width: 100,
-                      border: "1px solid white",
-                      borderRadius: 20,
-                    }}
-                    onClick={darkThemeHandler}
-                  >
-                    {" "}
-                    Dark Theme
-                  </li>
-                </ul>
-              </div>
-            </nav> */}
           </Toolbar>
         </Container>
       </AppBar>
