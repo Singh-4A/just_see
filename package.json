@@ -2,7 +2,7 @@
   "name": "my-vue-app",
   "private": true,
   "version": "0.0.0",
-  "proxy": "https://iac-api-fv75.onrender.com",
+
   "scripts": {
     "dev": "vite",
     "build": "vite build",
