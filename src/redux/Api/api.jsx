@@ -9,8 +9,10 @@ export const createTodoApi = async (props) => {
         name: props.inputValue,
       },
     });
+
     return createTodo;
   } catch (error) {
-    console.log(error);
+    return error.response.data || "something went wrong!"
+
   }
 };

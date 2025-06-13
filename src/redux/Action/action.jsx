@@ -10,8 +10,8 @@ export const createTodoSuccess = (payload) => ({
   payload,
 });
 
-export const createTodoFail = (error) => ({
+export const createTodoFail = (payload) => ({
   type: CREATE_TODO_FAIL,
-  payload: error,
+  payload: payload,
   error: true,
 });

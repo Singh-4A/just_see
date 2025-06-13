@@ -8,6 +8,9 @@ import {
 } from "../../redux/Action/getTodoAction";
 import { deleteTodo } from "../../redux/Action/deleteTodo";
 import { editTodo } from "../../redux/Action/editTodoAction";
+import { useSnackbar } from "notistack";
+import { createTodoApi } from "../../redux/Api/api";
+
 
 const MainTodo = () => {
   // this state handel for input value
@@ -17,6 +20,8 @@ const MainTodo = () => {
     totalCount,
   } = useSelector((state) => state.getTodoListState) ?? { data: [] };
   const { status = "" } = useSelector((state) => state.deleteTodoState) ?? {};
+
+  const { status: faliCreateTodo = "", } = useSelector((state) => state.todoState)
   const [inputValue, setInputValue] = useState("");
   // store current input value for in array using this state
   const [addTodoValue, setAddTodoValue] = useState([]);
@@ -27,10 +32,11 @@ const MainTodo = () => {
   const [complete, setComplete] = useState(false);
   const [page, setPage] = useState(1);
 
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
   const dispatch = useDispatch();
 
-  const { loading = false, list = [] } =
-    useSelector((state) => state?.todoState) ?? {};
+
 
   const addValueHandler = useCallback(() => {
     if (inputValue?.trim()) {
@@ -60,9 +66,9 @@ const MainTodo = () => {
       const editData = addTodoValue.map((item, i) => {
         return item?._id === currentIndex
           ? {
-              name: editField,
-              _id: item._id,
-            }
+            name: editField,
+            _id: item._id,
+          }
           : item;
       });
 
@@ -83,19 +89,34 @@ const MainTodo = () => {
     const completeTask = addTodoValue.find((_, i) => i === current_index);
   };
 
-  const handleFetchData = () => {
-    addValueHandler();
-    dispatch(createTodo({ inputValue }));
-    dispatch(
-      getTodoList({
-        limit: 10,
-        page: page,
-      })
-    );
-    setAddTodoValue([]);
+  const handleFetchData = async () => {
+    try {
+      const response = await createTodoApi({ inputValue })
+      addValueHandler();
+      if (response?.status === 200) {
+
+        setAddTodoValue([]);
+        dispatch(
+          getTodoList({
+            limit: 20,
+            page: page,
+          })
+        );
+      } else {
+        enqueueSnackbar(response?.message, {
+          variant: 'error'
+        })
+      }
+
+    } catch (error) {
+
+    }
+
+
+
   };
 
-  
+
   useEffect(() => {
     if (!getLoading && Array.isArray(todosFromApi)) {
       setAddTodoValue((prev) => [...prev, ...todosFromApi]);
@@ -103,20 +124,23 @@ const MainTodo = () => {
     // Optionally else: log a warning if data format is invalid
   }, [getLoading, todosFromApi]);
   useEffect(() => {
-    dispatch(getTodoList({ limit: 10, page }));
+    dispatch(getTodoList({ limit: 20, page }));
   }, [page, dispatch]);
 
   useEffect(() => {
     if (status === "success") {
       dispatch(
         getTodoList({
-          limit: 10,
+          limit: 20,
           page: page,
         })
       );
+
+
       setAddTodoValue([]);
     }
   }, [status]);
+
 
   const autoScrollPaginationHandler = (e) => {
     const scrollTop = e.target.scrollTop;
@@ -132,7 +156,9 @@ const MainTodo = () => {
 
   return (
     <>
-      <div className="main_todo">
+
+
+      <div >
         <div className="todo_box">
           <div
             style={{

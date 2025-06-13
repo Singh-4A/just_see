@@ -7,7 +7,7 @@ function* fetchDataSaga(action) {
     const response = yield call(createTodoApi, action.payload);
     yield put(createTodoSuccess(response.data));
   } catch (error) {
-    yield put(createTodoFail(error.message));
+    yield put(createTodoFail(response?.data));
   }
 }
 
