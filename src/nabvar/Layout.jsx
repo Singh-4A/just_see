@@ -106,8 +106,8 @@ const Layout = () => {
                   sx={{ display: { xs: "block", md: "none" } }}
                 >
                   {userData &&
-                    routePath.map((page) => (
-                      <MenuItem key={page} onClick={handleCloseNavMenu}>
+                    routePath.map((page,index) => (
+                      <MenuItem  key={index} onClick={handleCloseNavMenu}>
                         <Button
                           key={page.path}
                           component={Link}

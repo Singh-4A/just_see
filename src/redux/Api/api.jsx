@@ -7,6 +7,7 @@ export const createTodoApi = async (props) => {
       url: `${process.env.API_END_POINT}todo`,
       data: {
         name: props.inputValue,
+        skill: props.selectChip
       },
     });
 

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const editTodoApi = async (props) => {
-  const { id, name } = props;
+  const { id, name ,skill} = props;
 
   try {
     const response = await axios({
@@ -9,6 +9,7 @@ export const editTodoApi = async (props) => {
       url: `${process.env.API_END_POINT}todo/${id}`,
       data: {
         name: name,
+        skill:skill
       },
     });
 
