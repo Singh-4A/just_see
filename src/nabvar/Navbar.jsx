@@ -11,6 +11,7 @@ import TrafficLight from "../TrraficLight/TrafficLight";
 import Scroll from "../scroll/Scroll";
 import Login from "../Login/login";
 import DragAndDropList from "../draganddrop/drangAndDrop";
+import { AutoComponent } from "../autocomponent/autoComponent";
 
 const Stopwatch = lazy(() => import("../Stopwatch/Stopwatch"));
 const MainTodo = lazy(() => import("../orgnigim/Todo/MainTodo"));
@@ -36,7 +37,7 @@ export default function Navbar() {
             <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/traffic" element={<TrafficLight />} />
-            <Route path="/scroll" element={<Scroll />} />
+            <Route path="/autocomplete" element={<AutoComponent />} />
             <Route path="/progress" element={<ProgressMain />} />
             <Route path="/stopwatch" element={<Stopwatch />} />
             <Route path="/todo" element={<MainTodo />} />

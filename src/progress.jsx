@@ -4,42 +4,40 @@ function ProgressBar({ value }) {
   const [progressValue, setProgressValue] = useState(value);
 
   useEffect(() => {
-    setProgressValue(Math.min(100, Math.max(value, 0)));
+    if (progressValue <= 100)
+      setProgressValue(Math.min(100, Math.max(0, value)))
+
   }, [value]);
 
   return (
-    <div
-      style={{
-        position: "relative",
-        margin: "auto",
-        width: "400px",
-        height: 50,
-        border: "1px solid black",
-        borderRadius: 30,
-        marginTop: 10,
-      }}
-    >
-      <div
-        style={{
-          position: "absolute",
-          transform: "translate(-50% -50%)",
-          top: "30%",
-          left: "50%",
-          color: progressValue >50 ? "white" : "black",
-          zIndex:1000
-        }}
-      >
-        {progressValue}%
+    <div style={{
+      position: "relative",
+      width: 400,
+      height: 50,
+      border: "1px solid black",
+      margin: 'auto',
+      marginTop: 10,
+      borderRadius: 50
+    }}>
+      <div style={{
+        position: 'absolute',
+        left: "50%",
+        top: "24%",
+        color: progressValue < 50 ? "black" : "white"
+      }}>
+        {value}%
       </div>
-      <div
-        style={{
-          height: "100%",
-          backgroundColor: "blue",
-          width: `${progressValue}%`,
-          position: "absolute",
-          borderRadius: 20,
-        }}
-      />
+      <div style={{
+        background: '#00ff4e',
+        width: `${progressValue}%`,
+        height: "100%",
+        borderRadius: 50
+
+      }}>
+
+
+      </div>
+      {progressValue < 100 ? "Loading..." : "Complete"}
     </div>
   );
 }

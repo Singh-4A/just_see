@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import * as React from "react";
-import { Link, Outlet, Router } from "react-router-dom";
+import { Link, Outlet, Router, useLocation ,useParams} from "react-router-dom";
 import { createContextData } from "../contextapi/contextApi";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -17,7 +17,8 @@ import AdbIcon from "@mui/icons-material/Adb";
 const Layout = () => {
   const userDataString = localStorage.getItem("userData");
   const userData = JSON.parse(userDataString);
-
+  const router=useLocation()
+console.log(router.pathname)
   const { darkTheme, darkThemeHandler } = useContext(createContextData);
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -37,6 +38,7 @@ const Layout = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+  const [activeLink, setActiveLink] = React.useState([router.pathname.replace(/^\/+/, '')])
 
   const routePath = [
     {
@@ -46,7 +48,7 @@ const Layout = () => {
       path: "traffic",
     },
     {
-      path: "scroll",
+      path: "autocomplete",
     },
     {
       path: "todo",
@@ -106,8 +108,8 @@ const Layout = () => {
                   sx={{ display: { xs: "block", md: "none" } }}
                 >
                   {userData &&
-                    routePath.map((page,index) => (
-                      <MenuItem  key={index} onClick={handleCloseNavMenu}>
+                    routePath.map((page, index) => (
+                      <MenuItem key={index} onClick={handleCloseNavMenu}>
                         <Button
                           key={page.path}
                           component={Link}
@@ -124,16 +126,23 @@ const Layout = () => {
 
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
               {userData &&
-                routePath?.map((page) => (
-                  <Button
+                routePath?.map((page) => {
+
+
+                  return <Button
                     key={page.path}
                     component={Link}
                     to={`/${page.path}`}
-                    sx={{ my: 2, color: "white", display: "block" }}
+                    sx={{
+                      my: 2, color: "white", display: "block",
+                      backgroundColor: activeLink.includes(page.path) ? 'black' : ''
+                    }}
+                    onClick={() => setActiveLink((prev) => activeLink.includes(page.path) ? prev.filter((active) => active !== page.path) : [prev, page.path])}
+
                   >
                     {page.label ?? page.path}
                   </Button>
-                ))}
+                })}
             </Box>
 
             <Box sx={{ flexGrow: 0 }}>

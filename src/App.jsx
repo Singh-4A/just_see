@@ -1,9 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import "./App.css";
 // import ProgressBar from "./progress";
 // import Todo from "./Todo/todo";
 import Navbar from "./nabvar/Navbar";
 import { createContextData } from "./contextapi/contextApi";
+import VideoCreate from "./aiVideo/aivideo";
 // import { createPortal } from "react-dom";
 // import { Modal } from "./modal/modal";
 
@@ -198,6 +199,17 @@ function App() {
   //   return acc + currentValue;
   // }, 1);
 
+  // const [data, setData] = useState([{ name: "arjun" },
+  // { name: "aman" }
+  // ])
+
+  // function nextButton() {
+
+  // }
+
+  // function PrevButton() {
+
+  // }
   return (
     <div
       style={{
@@ -205,7 +217,34 @@ function App() {
         height: "100vh",
       }}
     >
+
+{/* <VideoCreate/> */}
+      {/* <button className="border border-blue-700 rounded-[10px]  w-[100px] py-1" onClick={PrevButton}>
+        Prev
+      </button>
+      <button
+        className="border border-blue-700 rounded-[10px]  w-[100px] py-1"
+        onClick={
+          nextButton
+        }
+      >
+        Next
+      </button> */}
+
       <Navbar />/{/* Infinite Scroll Section */}
+      {/* <button className="border border-blue-700 rounded-[10px]  w-[100px] py-1" onClick={currentValue > 0 ? () => countDecrement() : null}>
+        DEcrement
+      </button>
+      <button
+        className="border border-blue-700 rounded-[10px]  w-[100px] py-1"
+        onClick={
+          countIncrement
+        }
+      >
+        INCREMNET
+      </button>
+      {currentValue} */}
+
       {/* <button
         onClick={(e) => {
           e.stopPropagation();
@@ -214,7 +253,7 @@ function App() {
       >
         open modal
       </button> */}
-   
+
       {/* {openModal &&
         createPortal(
           <Modal setOpenModal={setOpenModal} />,

@@ -2,20 +2,20 @@ import React, { lazy, Suspense, useEffect, useState } from "react";
 const ProgressBar = lazy(() => import("../src/.//progress"));
 export const ProgressMain = () => {
   const [value, setValue] = useState(0);
-
+  console.log(value, "va;ue")
   useEffect(() => {
-    let timeOutId = setInterval(() => {
+    let timeId = setInterval(() => {
       setValue((prev) => {
-        if (prev < 100) {
-          return prev + 1;
+        if (prev <100) {
+          return prev + 1
         } else {
-          clearTimeout(timeOutId);
-
-          return 100;
+          return 100
         }
-      });
-    }, 100);
-    return () => clearTimeout(timeOutId);
+      })
+    }, 100)
+
+
+    return () => clearInterval(timeId)
   }, [value]);
 
   return (

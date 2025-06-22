@@ -135,11 +135,11 @@ const MainTodo = () => {
 
   useEffect(() => {
     if (!getLoading && Array.isArray(todosFromApi)) {
-      setAddTodoValue((prev) => [...prev, ...todosFromApi]);
+      setAddTodoValue([...todosFromApi]); // don't append every time
     }
-    // Optionally else: log a warning if data format is invalid]
-    return () => setAddTodoValue([]);
-  }, [getLoading, todosFromApi]);
+  }, [todosFromApi]); // run only on mount
+
+
   useEffect(() => {
     dispatch(getTodoList({ limit: 20, page }));
   }, [page, dispatch]);
@@ -159,6 +159,44 @@ const MainTodo = () => {
 
   // const chip = [{ skill: "react js", id: 1 }, { skill: "javascript", id: 2 }, { id: 3, skill: "css" }, { skill: "material ui", id: 4 }, { skill: "bootstarp", id: 5 }, { skill: "html", id: 6 }, { skill: "telwindcss", id: 7 }]
   const chips = ["react js", "javascript", "css", "material ui", "tailwindcss", "html"];
+
+
+
+
+  function dragstartHandler(ev, item) {
+    const json = JSON.stringify(item);
+    ev.dataTransfer.setData("application/json", json);
+  }
+
+
+
+
+  function dropHandler(ev) {
+    ev.preventDefault();
+    const raw = ev.dataTransfer.getData("application/json");
+    if (!raw) return;
+
+    const dropped = JSON.parse(raw);
+    setAddTodoValue(prev => {
+      const filtered = prev.filter(elm => elm?._id !== dropped._id);
+      return [...filtered, dropped];
+    });
+  }
+
+
+  function dragoverHandler(ev) {
+    ev.preventDefault()
+    ev.dataTransfer.dropEffect = "move";
+  }
+
+
+
+  function onDragLeave(evt) {
+    // console.log(evt.target)
+  }
+
+
+
   return (
     <>
 
@@ -231,6 +269,10 @@ const MainTodo = () => {
         editHandler={editHandler}
         completeHandler={completeHandler}
         autoScrollPaginationHandler={autoScrollPaginationHandler}
+        dragstartHandler={dragstartHandler}
+        dropHandler={dropHandler}
+        dragoverHandler={dragoverHandler}
+        onDragLeave={onDragLeave}
       />
     </>
 

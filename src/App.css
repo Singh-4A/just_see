@@ -4,11 +4,12 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
-  padding: 0;
-  box-sizing: border-box;
+/* src/App.css */
+body {
   margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f7fa;
+  color: #333;
 }
-
 
 

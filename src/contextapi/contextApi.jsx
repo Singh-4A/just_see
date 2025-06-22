@@ -1,53 +1,47 @@
 import { createContext, useCallback, useReducer } from "react";
 
+
+
 export const createContextData = createContext();
 
-const initialValue = {
-  darkLight: false,
-  count: 0,
-};
+const intialValue = { count: 0 }
 
 function reducer(state, action) {
-  switch (action.type) {
-    case "DARK":
-      return { ...state, darkLight: !state.darkLight };
 
-    case "INCREMENT":
-      return { ...state, count: state.count + 1 };
-    case "DECREMENT":
-      return {
-        ...state,
-        count: state.count - 1,
-      };
-    default:
-      return state;
+  switch (action.type) {
+    case "INCREMENT": return {
+      count: state.count + 1
+    }
+    case "DECREMENT": return {
+      count: state.count - 1
+    }
+    default: return state
+
   }
+
 }
 
 export function ContextApi({ children }) {
-  const [currentValue, dispatch] = useReducer(reducer, initialValue);
+  const [currentValue, dispatch] = useReducer(reducer, intialValue)
 
-  const darkHandler = useCallback(() => {
-    dispatch({ type: "DARK" });
-  }, []);
 
-  const IncrementHandler = useCallback(() => {
-    dispatch({ type: "INCREMENT" });
-  }, []);
+  const increment = useCallback(() => {
+    dispatch({ type: "INCREMENT" })
+  },
+    [currentValue?.count])
 
-  const decrementHandler = useCallback(() => {
-    dispatch({ type: "DECREMENT" });
-  }, []);
-  const value = {
-    darkThemeHandler: darkHandler,
-    darkTheme: currentValue.darkLight,
-    countIncrement: IncrementHandler,
-    currentValue: currentValue.count,
-    countDecrement: decrementHandler,
-  };
-  return (
-    <createContextData.Provider value={value}>
-      {children}
-    </createContextData.Provider>
-  );
+  const decremnet = useCallback(() => {
+    dispatch({ type: "DECREMENT" })
+  }, [currentValue?.count])
+
+  let value = {
+    currentValue: currentValue?.count,
+    countIncrement: increment,
+    countDecrement: decremnet
+  }
+
+  return <createContextData.Provider value={value}>
+    {children}
+  </createContextData.Provider>
+
 }

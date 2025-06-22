@@ -24,7 +24,6 @@ createRoot(document.getElementById("root")).render(
               <App />
             </StrictMode>
           </SnackbarProvider>
-
         </ErrorBoundary>
       </Suspense>
     </ContextApi>

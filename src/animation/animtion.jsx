@@ -98,7 +98,8 @@ function Card({ emoji, hueA, hueB, i,
     editHandler,
     completeHandler,
     autoScrollPaginationHandler,
-    item
+    item,
+
 }) {
     const background = `linear-gradient(306deg, ${hue(hueA)}, ${hue(hueB)})`;
 
@@ -119,23 +120,32 @@ function Card({ emoji, hueA, hueB, i,
 
 
 
+
     return (
 
-        
+
         <motion.div
             style={cardContainer}
             initial="offscreen"
             whileInView="onscreen"
             viewport={{ amount: 0.8 }}
+
+
         >
 
+
+
+
+
             <motion.div
+
                 style={card}
                 variants={cardVariants} className="card">
                 <Item
                     className={`  text-gray-900  hover:text-white bg-violet-500 hover:bg-violet-600 focus:outline-2 focus:outline-offset-2 focus:outline-violet-500 active:bg-violet-700 cursor-pointer text-transform`}
                 >
                     <Box
+
                         display="flex"
                         alignItems="center"
                         justifyContent="space-between"
@@ -230,21 +240,52 @@ export default function AnimationDemo({ todos = [],
     editHandler,
     completeHandler,
     autoScrollPaginationHandler,
-    getLoading}) {
+    getLoading,
+    dragstartHandler,
+    dropHandler,
+    dragoverHandler,
+    onDragLeave }) {
     return (
-        <Grid container spacing={2}
-        >
-            { todos.map((item, i) => (
-                <Grid key={i} size={{ xs: 12, md: 3 }}>
-                    <Card emoji={item.name} hueA={10} hueB={1} i={i}
-                        autoScrollPaginationHandler={autoScrollPaginationHandler}
-                        removeHandler={removeHandler}
-                        editHandler={editHandler}
-                        item={item}
-                    />
+
+        <>
+
+            <div
+                onDragLeave={onDragLeave}
+                onDrop={dropHandler} onDragOver={dragoverHandler}
+              >
+
+                <Grid container spacing={2}
+
+                >
+
+                    {todos.map((item, i) => (
+                        <Grid key={i} size={{ xs: 12, md: 3 }}>
+                            < div
+                                draggable
+                                onDragStart={ev => dragstartHandler(ev, item)}
+                                style={{ padding: 10, border: '1px solid #ddd', cursor: 'move' }}
+                            >
+                                <Card emoji={item.name} hueA={10} hueB={1} i={i}
+                                    autoScrollPaginationHandler={autoScrollPaginationHandler}
+                                    removeHandler={removeHandler}
+                                    editHandler={editHandler}
+                                    item={item}
+                                    dragstartHandler={dragstartHandler}
+
+
+                                />
+                            </div>
+
+                        </Grid>
+                    ))}
                 </Grid>
-            ))}
-        </Grid>
+
+
+            </div>
+
+
+        </>
+
     );
 }
 

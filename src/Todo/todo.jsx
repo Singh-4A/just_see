@@ -31,6 +31,11 @@ const TodoList = ({
   completeHandler,
   autoScrollPaginationHandler,
   getLoading,
+  dragstartHandler,
+  dropHandler,
+  dragoverHandler,
+  onDragLeave
+
 }) => {
 
   return (
@@ -44,11 +49,16 @@ const TodoList = ({
         borderRadius: 4,
         // marginTop: 10,
       }}>
-     
-        <AnimationDemo todos={todos} autoScrollPaginationHandler={autoScrollPaginationHandler} editHandler={editHandler} getLoading={getLoading} removeHandler={removeHandler} />
+
+      <AnimationDemo
+        dragstartHandler={dragstartHandler}
+        dropHandler={dropHandler}
+        dragoverHandler={dragoverHandler}
+        onDragLeave={onDragLeave}
+        todos={todos} autoScrollPaginationHandler={autoScrollPaginationHandler} editHandler={editHandler} getLoading={getLoading} removeHandler={removeHandler} />
 
 
-      
+
     </div>
     // <Box sx={{ flexGrow: 1 }}
     //   onScroll={autoScrollPaginationHandler} p={1}
