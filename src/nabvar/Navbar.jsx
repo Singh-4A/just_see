@@ -12,6 +12,7 @@ import Scroll from "../scroll/Scroll";
 import Login from "../Login/login";
 import DragAndDropList from "../draganddrop/drangAndDrop";
 import { AutoComponent } from "../autocomponent/autoComponent";
+import { Chatbot } from "../aiChatbot/aiChatbot";
 
 const Stopwatch = lazy(() => import("../Stopwatch/Stopwatch"));
 const MainTodo = lazy(() => import("../orgnigim/Todo/MainTodo"));
@@ -26,14 +27,14 @@ function Users() {
 
 export default function Navbar() {
 
-;
+  ;
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
+            <Route index element={<Login />} />
             <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/traffic" element={<TrafficLight />} />
@@ -41,7 +42,8 @@ export default function Navbar() {
             <Route path="/progress" element={<ProgressMain />} />
             <Route path="/stopwatch" element={<Stopwatch />} />
             <Route path="/todo" element={<MainTodo />} />
-            <Route  path="/drag" element={<DragAndDropList/>}/>
+            <Route path="/drag" element={<DragAndDropList />} />
+            <Route path="/chatbot" element={<Chatbot />} />
             <Route path="*" element={<Users />} />
           </Route>
         </Routes>

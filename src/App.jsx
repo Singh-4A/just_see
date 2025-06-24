@@ -231,7 +231,7 @@ function App() {
         Next
       </button> */}
 
-      <Navbar />/{/* Infinite Scroll Section */}
+      <Navbar />{/* Infinite Scroll Section */}
       {/* <button className="border border-blue-700 rounded-[10px]  w-[100px] py-1" onClick={currentValue > 0 ? () => countDecrement() : null}>
         DEcrement
       </button>

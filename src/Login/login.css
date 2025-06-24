@@ -1,7 +1,8 @@
 .form_container {
   display: grid;
   place-items: center;
-  height: 80vh;
+  height: 91vh;
+  background-color: black;
 }
 
 .form_box {
@@ -9,7 +10,7 @@
   border: 1px solid blueviolet;
   border-radius: 20px;
   box-shadow: -1px 1px 10px 8px #61c7c6;
-  min-height :362px;
+  min-height: 293px;
   max-height: 462px;
 
 }
@@ -26,20 +27,30 @@
   justify-content: center;
   flex-direction: column;
   gap: 10px;
+  margin: auto;
+  padding: 10px;
+
 }
 
-.input_box input{
- border-radius: 10px;
- height: 40px;
+.input_box input {
+  border-radius: 10px;
+  height: 40px;
 }
-.login_button{
+
+.login_button {
   display: flex;
   border-radius: 20px;
-  height: 50px;
   width: 100%;
   justify-content: center;
+  padding: 10px;
 }
-.login_button > button{
-width: 130px;
-border-radius: 20px;
+
+.login_button>button {
+  width: 130px;
+  border-radius: 20px;
+  
+}
+.login_button :hover{
+  background-color: blue;
+  color: white;
 }

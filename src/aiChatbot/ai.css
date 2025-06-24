@@ -1,0 +1,54 @@
+.card {
+  min-height: 13px;
+  max-height: 1000px;
+  border: 1px solid rgb(214, 179, 179);
+  border-radius: 10px;
+  width: 100%;
+  padding: 10px;
+  color: white;
+  margin-bottom: 12px;
+
+  cursor: pointer;
+}
+
+
+
+
+/* Customize scrollbar width and track */
+.chat-container::-webkit-scrollbar {
+  width: 10px;
+}
+
+.chat-container::-webkit-scrollbar-track {
+  background: #4b70c6;
+  border-radius: 5px;
+}
+
+.chat-container::-webkit-scrollbar-thumb {
+  background: #ddc6c6;
+  border-radius: 5px;
+}
+
+.chat-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+
+
+.histroy::-webkit-scrollbar {
+  width: 10px;
+}
+
+.histroy::-webkit-scrollbar-track {
+  background: #2a50c2;
+  border-radius: 5px;
+}
+
+.histroy::-webkit-scrollbar-thumb {
+  background: #9182ed;
+  border-radius: 5px;
+}
+
+.histroy::-webkit-scrollbar-thumb:hover {
+  background: #bfbbbb;
+}
