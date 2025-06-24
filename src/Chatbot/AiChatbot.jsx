@@ -4,6 +4,9 @@ import React, { useEffect, useRef, useState } from 'react'
 import { Message } from "./Message"
 import "./Chatbot.css"
 import DeleteIcon from '@mui/icons-material/Delete';
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import CircularProgress from '@mui/material/CircularProgress'
 
 
 const Chatbot = () => {
@@ -106,11 +109,13 @@ const Chatbot = () => {
 
         <div class="flex  h-[90vh]  ">
 
-            <div style={{
-                backgroundColor: "#232323"
+            <Box sx={{
+                backgroundColor: "#232323",
+                display: { xs: "none", md: "block" }
+
             }} className="basis-1/6 p-3  text-center overflow-auto histroy"
             >
-                
+
 
                 <h1 style={{
                     fontWeight: 800,
@@ -141,7 +146,7 @@ const Chatbot = () => {
                     })
                 }
 
-            </div>
+            </Box>
 
 
             <div className="flex flex-col flex-1 bg-gray-200 p-4"
@@ -150,11 +155,12 @@ const Chatbot = () => {
             >
 
 
-                <h1 style={{
+                <Typography sx={{
                     fontWeight: 800,
-                    fontSize: 40,
-                    textAlign:'center'
-                }} className="bg-gradient-to-r from-red-800 via-black-500 to-indigo-400 inline-block text-transparent bg-clip-text p-1">Search anything you want</h1>
+                    fontSize: { xs: 20, md: 40 },
+                    textAlign: 'center',
+
+                }} className="bg-gradient-to-r from-red-800 via-black-500 to-indigo-400 inline-block text-transparent bg-clip-text p-1">Search anything you want</Typography>
 
                 <div className="flex-1 overflow-auto chat-container">
                     {storeAiData.map((item, idx) => {
@@ -164,7 +170,17 @@ const Chatbot = () => {
                 </div>
                 {/* Content section */}
 
-                {apiStatus === "loading" && "Loading..."}
+                {apiStatus === "loading" && <div style={{
+                    position: 'absolute',
+                    transform: "translate(50%, 50%)",
+                    left: "50%",
+                    top: "50%"
+
+
+                }}>
+                    <CircularProgress  color="secondary" />
+                </div>}
+
 
                 <div className="flex space-x-2 mt-4 items-center ">
                     <input
@@ -185,6 +201,6 @@ const Chatbot = () => {
 
         </div>
     )
-}   
+}
 
 export default Chatbot
