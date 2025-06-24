@@ -11,6 +11,7 @@ import TrafficLight from "../TrraficLight/TrafficLight";
 import Login from "../Login/login";
 import DragAndDropList from "../draganddrop/drangAndDrop";
 import { AutoComponent } from "../autocomponent/autoComponent";
+import Chatbot from "../Chatbot/AiChatbot";
 
 const Stopwatch = lazy(() => import("../Stopwatch/Stopwatch"));
 const MainTodo = lazy(() => import("../orgnigim/Todo/MainTodo"));
@@ -41,7 +42,7 @@ export default function Navbar() {
             <Route path="/stopwatch" element={<Stopwatch />} />
             <Route path="/todo" element={<MainTodo />} />
             <Route path="/drag" element={<DragAndDropList />} />
-            {/* <Route path="/chatbot" element={<Chatbot />} /> */}
+            <Route path="/chatbot" element={<Chatbot />} />
             <Route path="*" element={<Users />} />
           </Route>
         </Routes>
