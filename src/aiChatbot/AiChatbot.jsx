@@ -2,7 +2,7 @@ import axios from 'axios'
 import { enqueueSnackbar } from 'notistack'
 import React, { useEffect, useRef, useState } from 'react'
 import { Message } from "./Message"
-import "./ai.css"
+import "./Chatbot.css"
 import DeleteIcon from '@mui/icons-material/Delete';
 
 

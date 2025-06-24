@@ -22,7 +22,6 @@ export const Item = styled(Paper)(({ theme }) => ({
   height: 100,
   borderRadius: 20,
   border: "1px solid black",
-  backgroundColor: 'antiquewhite'
 }));
 const TodoList = ({
   todos = [],

@@ -211,7 +211,6 @@ const Layout = () => {
                   sx={{
                     color: "black", display: "block",
                     backgroundColor: 'blue',
-                    color: 'white'
                   }}
                 >
                   {page.label ?? page.path}
