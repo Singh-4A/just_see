@@ -11,7 +11,7 @@ import TrafficLight from "../TrraficLight/TrafficLight";
 import Login from "../Login/login";
 import DragAndDropList from "../draganddrop/drangAndDrop";
 import { AutoComponent } from "../autocomponent/autoComponent";
-import { Chatbot } from "../aiChatbot/aiChatbot";
+import Chatbot from "../aiChatbot/aiChatbot";
 
 const Stopwatch = lazy(() => import("../Stopwatch/Stopwatch"));
 const MainTodo = lazy(() => import("../orgnigim/Todo/MainTodo"));

@@ -6,7 +6,7 @@ import "./Chatbot.css"
 import DeleteIcon from '@mui/icons-material/Delete';
 
 
-export const Chatbot = () => {
+const Chatbot = () => {
 
     const [storeAiData, setStoreAiData] = useState([])
     const [apiStatus, setApiStatus] = useState(false)
@@ -180,3 +180,5 @@ export const Chatbot = () => {
         </div>
     )
 }   
+
+export default Chatbot
