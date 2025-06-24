@@ -110,6 +110,7 @@ const Chatbot = () => {
                 backgroundColor: "#232323"
             }} className="basis-1/6 p-3  text-center overflow-auto histroy"
             >
+                
 
                 <h1 style={{
                     fontWeight: 800,
@@ -149,6 +150,11 @@ const Chatbot = () => {
             >
 
 
+                <h1 style={{
+                    fontWeight: 800,
+                    fontSize: 40,
+                    textAlign:'center'
+                }} className="bg-gradient-to-r from-red-800 via-black-500 to-indigo-400 inline-block text-transparent bg-clip-text p-1">Search anything you want</h1>
 
                 <div className="flex-1 overflow-auto chat-container">
                     {storeAiData.map((item, idx) => {
