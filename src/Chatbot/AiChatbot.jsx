@@ -170,16 +170,16 @@ const Chatbot = () => {
                 </div>
                 {/* Content section */}
 
-                {apiStatus === "loading" && <div style={{
+                {apiStatus === "loading" && <Box sx={{
                     position: 'absolute',
                     transform: "translate(50%, 50%)",
-                    left: "50%",
+                    left: {xs:"38%",md:"50%"},
                     top: "50%"
 
 
                 }}>
                     <CircularProgress  color="secondary" />
-                </div>}
+                </Box>}
 
 
                 <div className="flex space-x-2 mt-4 items-center ">
