@@ -144,7 +144,6 @@ const Layout = () => {
               {userData &&
                 routePath?.map((page) => {
 
-
                   return <Button
                     key={page.path}
                     component={Link}
@@ -166,29 +165,7 @@ const Layout = () => {
               alignItems: "center",
               gap: '10px'
             }}>
-              {/* <Tooltip title="Open settings">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                </IconButton>
-              </Tooltip> */}
-              {/* <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                
-              </Menu> */}
+              
 
               {
                 userData && <div style={{
@@ -201,8 +178,6 @@ const Layout = () => {
               }
 
               {settings.map((page) => (
-                // <MenuItem key={page} onClick={handleCloseNavMenu}>
-
                 <Button
                   onClick={() => logoutUser()}
                   key={page.path}
@@ -215,7 +190,6 @@ const Layout = () => {
                 >
                   {page.label ?? page.path}
                 </Button>
-                // </MenuItem>
               ))}
             </Box>
           </Toolbar>

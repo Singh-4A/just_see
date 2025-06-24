@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useEffect } from "react";
+import React, { lazy, Suspense } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -8,7 +8,6 @@ import {
 import Layout from "./Layout";
 import { ProgressMain } from "../ProgressMain";
 import TrafficLight from "../TrraficLight/TrafficLight";
-import Scroll from "../scroll/Scroll";
 import Login from "../Login/login";
 import DragAndDropList from "../draganddrop/drangAndDrop";
 import { AutoComponent } from "../autocomponent/autoComponent";
