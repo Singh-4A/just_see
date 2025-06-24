@@ -2,7 +2,6 @@ import React, { lazy, Suspense, useEffect, useState } from "react";
 const ProgressBar = lazy(() => import("../src/.//progress"));
 export const ProgressMain = () => {
   const [value, setValue] = useState(0);
-  console.log(value, "va;ue")
   useEffect(() => {
     let timeId = setInterval(() => {
       setValue((prev) => {
