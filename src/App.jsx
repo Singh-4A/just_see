@@ -215,6 +215,7 @@ function App() {
       style={{
         backgroundColor: darkTheme ? "black" : "white",
         height: "100vh",
+         overflow:"hidden",
       }}
     >
 

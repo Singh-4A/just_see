@@ -22,6 +22,7 @@ function getTodoListReducer(state = initialState, action) {
         ...state,
         data: [...state.list, ...action.payload.data],
         totalCount: action.payload.pagination?.totalItems,
+        totalPages: action.payload.pagination?.totalPages,
         loading: false,
       };
 

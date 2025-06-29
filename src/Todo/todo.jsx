@@ -43,7 +43,7 @@ const TodoList = ({
       className="inside_box"
       style={{
         overflow: "auto",
-        height: 500,
+        height: 483,
         padding: 10,
         borderRadius: 4,
         // marginTop: 10,

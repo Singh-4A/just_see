@@ -8,6 +8,7 @@ import App from "./App.jsx";
 import { ContextApi } from "./contextapi/contextApi.jsx";
 import { Provider } from "react-redux";
 import store from "./redux/store/store.jsx";
+import DoctorApp from "./doc/doctor.jsx";
 
 // import ErrorBoundary from "./errorBoundary/ErrorBoundary.jsx";
 const ErrorBoundary = React.lazy(() =>
@@ -22,6 +23,7 @@ createRoot(document.getElementById("root")).render(
           <SnackbarProvider anchorOrigin={{ vertical: 'top', horizontal: 'center' }} >
             <StrictMode>
               <App />
+              {/* <DoctorApp/> */}
             </StrictMode>
           </SnackbarProvider>
         </ErrorBoundary>

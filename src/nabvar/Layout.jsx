@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import * as React from "react";
-import { Link, Outlet, Router, useLocation, useParams } from "react-router-dom";
+import { Link, Outlet, redirect, Router, useLocation, useParams } from "react-router-dom";
 import { createContextData } from "../contextapi/contextApi";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -14,10 +14,12 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
+import { useNavigate } from "react-router"
 const Layout = () => {
   const userDataString = localStorage.getItem("userData");
   const userData = JSON.parse(userDataString);
   const router = useLocation()
+  const navigate=useNavigate()
   const { darkTheme, darkThemeHandler } = useContext(createContextData);
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -67,12 +69,12 @@ const Layout = () => {
   ];
   const settings = [
     {
-      path: !userData ? "Login" : "Logout",
+      path: !userData ? "Login" : "login",
     },
   ];
 
   function logoutUser() {
-    window.open("/login");
+    navigate("/login");
     localStorage.clear();
   }
 
@@ -165,7 +167,7 @@ const Layout = () => {
               alignItems: "center",
               gap: '10px'
             }}>
-              
+
 
               {
                 userData && <div style={{

@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./login.css";
+import { useNavigate } from "react-router"
+
 function Login() {
   const [userValue, setUserValue] = useState({
     name: "",
@@ -15,6 +17,7 @@ function Login() {
     phoneError: false,
   });
   const inputRef = useRef(null);
+  const navigate=useNavigate()
 
   const onChangeHandler = (e) => {
     const { value, name } = e.target;
@@ -41,7 +44,7 @@ function Login() {
       setError(errors);
     } else {
       localStorage.setItem("userData", JSON.stringify(userValue));
-      window.open("/home");
+      navigate("/home");
     }
   };
 

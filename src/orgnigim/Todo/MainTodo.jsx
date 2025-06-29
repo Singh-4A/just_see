@@ -20,6 +20,7 @@ const MainTodo = () => {
     loading: getLoading = "",
     data: todosFromApi = [],
     totalCount,
+    totalPages
   } = useSelector((state) => state.getTodoListState) ?? { data: [] };
   const { status = "" } = useSelector((state) => state.deleteTodoState) ?? {};
 
@@ -34,6 +35,36 @@ const MainTodo = () => {
   const [complete, setComplete] = useState(false);
   const [page, setPage] = useState(1);
   const [selectChip, setSelectChip] = useState([])
+
+
+  const postPerPage = 10
+
+  // const lastIndex = page * postPerPage;
+  // const firstIndex = lastIndex - postPerPage;
+  const lastIndex = page * postPerPage
+  const firstIndex = lastIndex - page * postPerPage
+
+  let currentData = addTodoValue.slice(firstIndex, lastIndex)
+
+  useEffect(() => {
+    setAddTodoValue((prev) => [...prev, ...currentData])
+  }, [])
+
+
+
+
+
+
+
+
+
+
+  const nextBtn = Array.from({ length: 4 }, (_, index) => page + index)?.filter((value) => value <= totalPages)
+  const prevBtn = Array.from({ length: 3 }, (_, index) => page - 1 - index).filter((value) => value > 0)
+
+  const combineArray = Array.from(new Set([...nextBtn, ...prevBtn])).sort((a, b) => a - b)
+
+
 
 
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -137,11 +168,12 @@ const MainTodo = () => {
     if (!getLoading && Array.isArray(todosFromApi)) {
       setAddTodoValue([...todosFromApi]); // don't append every time
     }
+
   }, [todosFromApi]); // run only on mount
 
 
   useEffect(() => {
-    dispatch(getTodoList({ limit: 20, page }));
+    dispatch(getTodoList({ limit: 10, page }));
   }, [page, dispatch]);
 
 
@@ -151,8 +183,8 @@ const MainTodo = () => {
     const scrollTop = e.target.scrollTop;
     const scrollHeight = e.target.scrollHeight;
     const clientHeight = e.target.clientHeight;
-    const remainingHeight = scrollHeight - (scrollTop + clientHeight);
-    if (remainingHeight <= 0 && addTodoValue.length < totalCount) {
+    const remainingHeight = scrollHeight - (scrollTop + clientHeight)
+    if (remainingHeight <= 0 && addTodoValue.length < totalPages) {
       setPage((prev) => prev + 1);
     }
   };
@@ -191,8 +223,14 @@ const MainTodo = () => {
 
 
 
+
+
   function onDragLeave(evt) {
     // console.log(evt.target)
+  }
+
+  const paginate = (value) => {
+    if (value >= 1 && value <= totalPages) setPage(value);
   }
 
 
@@ -201,7 +239,9 @@ const MainTodo = () => {
     <>
 
       <div style={{
-        backgroundColor: '#e8e4e4'
+        backgroundColor: '#e8e4e4',
+
+
       }}>
         <div className="todo_box">
           <div
@@ -264,7 +304,7 @@ const MainTodo = () => {
 
       <TodoList
         getLoading={getLoading}
-        todos={addTodoValue}
+        todos={currentData}
         removeHandler={removeHandler}
         editHandler={editHandler}
         completeHandler={completeHandler}
@@ -274,6 +314,92 @@ const MainTodo = () => {
         dragoverHandler={dragoverHandler}
         onDragLeave={onDragLeave}
       />
+      {/* <button onClick={() => setPage((prev) => prev - 1)} style={{
+        height: 30,
+        width: 90,
+        border: '1px solid black',
+        marginLeft: 10
+      }}>
+        Prev
+      </button>
+
+      <button onClick={() => setPage((prev) => prev + 1)} style={{
+        height: 30,
+        width: 90,
+        border: '1px solid black',
+        marginLeft: 10
+      }}>
+        nextBtn
+      </button> */}
+
+
+      <div className="pagination_box" >
+        {
+          page > 1 && <span
+            onClick={() => paginate(page - 1)} className="pagination_start_button">
+            ◀️
+          </span>
+        }
+
+
+
+        {
+          combineArray.map((currentValue) => {
+            return <div
+              className="hover_box"
+              onClick={() => paginate(currentValue)}
+              style={{
+                backgroundColor: `${page === currentValue ? "gray" : "white"}`,
+                padding: 4,
+                border: '1px solid black',
+                width: 30,
+                textAlign: 'center',
+                color: `${page === currentValue ? "white" : "gray"}`,
+
+              }}>
+              {currentValue}
+            </div>
+          })
+        }
+        {
+          page < totalPages && <span className="pagination_last_button"
+            onClick={() => paginate(page + 1)}>▶️</span>
+        }
+
+
+      </div>
+
+
+
+      {/* <div className="pagination_box" >
+        <span
+          onClick={() => paginate(i - 1)} className="pagination_start_button">
+          ◀️
+        </span>
+
+
+        {
+          [...Array(totalPages)]?.map((_, i) => {
+            return <span
+              onClick={() => paginate(i + 1)}
+              style={{
+                backgroundColor: `${page === i + 1 ? "gray" : "white"}`,
+                padding: 4,
+                border: '1px solid black',
+                width: 30,
+                textAlign: 'center',
+                color: `${page === i + 1 ? "white" : "gray"}`,
+
+              }}>
+              {i + 1}
+            </span>
+          })
+        }
+
+        <span className="pagination_last_button"
+          onClick={() => paginate(page + 1)}>▶️</span>
+      </div> */}
+
     </>
 
 

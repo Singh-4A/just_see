@@ -9,3 +9,47 @@
   text-align: center;
 }
 
+.pagination_start_button {
+  border: 1px solid black;
+  padding: 4px;
+}
+
+
+.pagination_last_button {
+  border: 1px solid black;
+  padding: 4px;
+}
+
+.pagination_box {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.bohover_box :hover{
+  background-color: #bc1818;
+}
+.perpage_box {
+  width: 30px;
+  border: 1px solid black;
+  padding: 4px;
+  text-align: center;
+  cursor: pointer
+}
+
+.active_box {
+  background-color: rgb(155, 169, 182);
+  width: 30px;
+  border: 1px solid black;
+  padding: 4px;
+  text-align: center;
+  cursor: pointer;
+  color: white;
+}
+
+.perpage_box :hover {
+  background-color: aqua  !important;;
+  color: #bc1818;
+}
