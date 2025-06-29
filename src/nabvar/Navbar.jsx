@@ -45,7 +45,7 @@ const navigate = useNavigate()
             <Route path="/stopwatch" element={<Stopwatch />} />
             <Route path="/todo" element={<MainTodo />} />
             <Route path="/drag" element={<DragAndDropList />} />
-            <Route path="/chatbot/:id" element={<Chatbot />} />
+            <Route path="/chatbot" element={<Chatbot />} />
             <Route path="*" element={<Users />} />
           </Route>
         </Routes>
