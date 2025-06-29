@@ -1,6 +1,8 @@
 import { useContext } from "react";
 import * as React from "react";
-import { Link, Outlet, redirect, Router, useLocation, useParams } from "react-router-dom";
+
+import { Link, NavLink, Outlet, redirect, Router, useLocation, useParams } from "react-router-dom";
+
 import { createContextData } from "../contextapi/contextApi";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -15,11 +17,16 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useNavigate } from "react-router"
+
+
+import "./navbar.css"
+
+
 const Layout = () => {
   const userDataString = localStorage.getItem("userData");
   const userData = JSON.parse(userDataString);
   const router = useLocation()
-  const navigate=useNavigate()
+  const navigate = useNavigate()
   const { darkTheme, darkThemeHandler } = useContext(createContextData);
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -69,7 +76,7 @@ const Layout = () => {
   ];
   const settings = [
     {
-      path: !userData ? "Login" : "login",
+      path: !userData ? "Login" : "Logout",
     },
   ];
 
@@ -126,12 +133,12 @@ const Layout = () => {
                       >
                         <Button
                           key={page.path}
-                          component={Link}
+                          component={NavLink}
                           to={`/${page.path}`}
                           sx={{ color: "white", display: "block", backgroundColor: activeLink.includes(page.path) ? 'blue' : '' }}
                           onClick={() => {
-                            setActiveLink((prev) => activeLink.includes(page.path) ? prev.filter((active) => active !== page.path) : [prev, page.path],
-                              handleCloseNavMenu)
+                            setActiveLink((prev) => activeLink.includes(page.path) ? prev.filter((active) => active !== page.path) : [prev, page.path]);
+                            handleCloseNavMenu();
                           }}
                         >
                           {page.label ?? page.path}
@@ -148,7 +155,7 @@ const Layout = () => {
 
                   return <Button
                     key={page.path}
-                    component={Link}
+                    component={NavLink}
                     to={`/${page.path}`}
                     sx={{
                       my: 2, color: "white", display: "block",
@@ -183,7 +190,7 @@ const Layout = () => {
                 <Button
                   onClick={() => logoutUser()}
                   key={page.path}
-                  component={Link}
+                  // component={Link}
                   to={`/${page.path}`}
                   sx={{
                     color: "black", display: "block",
@@ -196,8 +203,10 @@ const Layout = () => {
             </Box>
           </Toolbar>
         </Container>
+
       </AppBar>
       <Outlet />
+
     </>
   );
 };

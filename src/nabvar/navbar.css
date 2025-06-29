@@ -1,0 +1,9 @@
+a.active {
+  color: rgb(32, 140, 18);
+}
+a.pending {
+  color: blue;
+}
+a.transitioning {
+  view-transition-name: my-transition;
+}

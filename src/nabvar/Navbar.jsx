@@ -1,10 +1,5 @@
-import React, { lazy, Suspense } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  BrowserRouter,
-} from "react-router-dom";
+import React, { lazy, Suspense, useEffect } from "react";
+
 import Layout from "./Layout";
 import { ProgressMain } from "../ProgressMain";
 import TrafficLight from "../TrraficLight/TrafficLight";
@@ -12,6 +7,7 @@ import Login from "../Login/login";
 import DragAndDropList from "../draganddrop/drangAndDrop";
 import { AutoComponent } from "../autocomponent/autoComponent";
 import Chatbot from "../Chatbot/AiChatbot";
+import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 
 const Stopwatch = lazy(() => import("../Stopwatch/Stopwatch"));
 const MainTodo = lazy(() => import("../orgnigim/Todo/MainTodo"));
@@ -25,15 +21,23 @@ function Users() {
 }
 
 export default function Navbar() {
+const navigate = useNavigate()
 
-  ;
+  useEffect(() => {
+    const getData = JSON.parse(localStorage.getItem("userData"))
+    if (getData === null) {
+      navigate("/login")
+    }
+    console.log(getData, "hi")
+  }, [])
+
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <BrowserRouter>
+    
         <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Home  />} />
+          <Route path="/" element={<Layout />} >
+            <Route index element={<Login />} />
             <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/traffic" element={<TrafficLight />} />
@@ -42,11 +46,11 @@ export default function Navbar() {
             <Route path="/stopwatch" element={<Stopwatch />} />
             <Route path="/todo" element={<MainTodo />} />
             <Route path="/drag" element={<DragAndDropList />} />
-            <Route path="/chatbot" element={<Chatbot />} />
+            <Route path="/chatbot/:id" element={<Chatbot />} />
             <Route path="*" element={<Users />} />
           </Route>
         </Routes>
-      </BrowserRouter>
+   
     </Suspense>
   );
 }

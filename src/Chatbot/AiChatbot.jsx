@@ -7,6 +7,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import CircularProgress from '@mui/material/CircularProgress'
+import { useParams } from 'react-router-dom'
 
 
 const Chatbot = () => {
@@ -15,6 +16,7 @@ const Chatbot = () => {
     const [apiStatus, setApiStatus] = useState(false)
     const [userTypeValue, setUserTypeValue] = useState("")
     const [historyData, setHistoryData] = useState([])
+    const {id} =useParams()
 
     const bottomRef = useRef(null)
 
