@@ -28,7 +28,6 @@ const navigate = useNavigate()
     if (getData === null) {
       navigate("/login")
     }
-    console.log(getData, "hi")
   }, [])
 
 
@@ -37,7 +36,7 @@ const navigate = useNavigate()
     
         <Routes>
           <Route path="/" element={<Layout />} >
-            <Route index element={<Login />} />
+            <Route index element={<Home />} />
             <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/traffic" element={<TrafficLight />} />
