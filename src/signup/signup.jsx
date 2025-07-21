@@ -57,17 +57,12 @@ const Signup = () => {
             display: "grid",
             placeItems: "center",
             height: "91vh",
-            backgroundImage: 'url("../src//assets/image.webp")',
-            backgroundAttachment: 'fixed',
-            backgroundPosition: "center"
-            /* background-repeat: no-repeat; */
-            /* background-size: 100%; */
+            backgroundColor: "black",
         }}>
             <div style={{
-                backgroundColor: "black",
                 border: '1px solid white ',
                 padding: 10,
-                width: "50%",
+                width: "30%",
                 borderRadius: 15,
                 display: 'flex',
                 justifyContent: 'center',

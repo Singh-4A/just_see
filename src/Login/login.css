@@ -2,9 +2,7 @@
   display: grid;
   place-items: center;
   height: 91vh;
-  background-image: url("../src//assets/image.webp");
-  background-attachment: fixed;
-  background-position: center;
+ background-color: black;
   /* background-repeat: no-repeat; */
   /* background-size: 100%; */
 }
