@@ -23,8 +23,8 @@ import "./navbar.css"
 
 
 const Layout = () => {
-  const userDataString = localStorage.getItem("userData");
-  const userData = JSON.parse(userDataString);
+  const token = localStorage.getItem("token");
+  const userData = JSON.parse(token);
   const router = useLocation()
   const navigate = useNavigate()
   const { darkTheme, darkThemeHandler } = useContext(createContextData);
@@ -74,16 +74,21 @@ const Layout = () => {
       path: "chatbot"
     }
   ];
+
   const settings = [
+
+
     {
-      path: !userData ? "Login" : "Logout",
+      path: "login",
     },
   ];
 
   function logoutUser() {
-    navigate("/login");
+    // navigate("/login");
     localStorage.clear();
   }
+
+  console.log(userData)
 
   return (
     <>
@@ -128,6 +133,7 @@ const Layout = () => {
                 >
                   {userData &&
                     routePath.map((page, index) => (
+
                       <MenuItem key={index} onClick={handleCloseNavMenu}
 
                       >
@@ -187,19 +193,51 @@ const Layout = () => {
               }
 
               {settings.map((page) => (
-                <Button
-                  onClick={() => logoutUser()}
-                  key={page.path}
-                  // component={Link}
-                  to={`/${page.path}`}
+                !userData && (
+                  <Button
+                    onClick={logoutUser}
+                    key={page.path}
+                    component={Link}
+                    to={`/${page.path}`}
+                    sx={{
+                      color: "black", display: "block",
+                      backgroundColor: 'blue',
+                    }}
+                  >
+                    {page.label ?? page.path}
+                  </Button>
+                )
+              ))}
+
+              {
+                userData && <Button
+                  onClick={logoutUser}
+                  component={Link}
+                  to={`/login`}
                   sx={{
                     color: "black", display: "block",
                     backgroundColor: 'blue',
                   }}
                 >
-                  {page.label ?? page.path}
+                  Logout
                 </Button>
-              ))}
+              }
+
+
+              {
+                !userData && <Button
+                  // onClick={}
+                  component={Link}
+                  to={`/signup`}
+                  sx={{
+                    color: "black", display: "block",
+                    backgroundColor: 'blue',
+                  }}
+                >
+                  signup
+                </Button>
+              }
+
             </Box>
           </Toolbar>
         </Container>

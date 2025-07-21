@@ -39,6 +39,9 @@ const MainTodo = () => {
 
   const postPerPage = 10
 
+
+
+
   // const lastIndex = page * postPerPage;
   // const firstIndex = lastIndex - postPerPage;
   const lastIndex = page * postPerPage
@@ -52,17 +55,14 @@ const MainTodo = () => {
 
 
 
-
-
-
-
-
-
-
-  const nextBtn = Array.from({ length: 4 }, (_, index) => page + index)?.filter((value) => value <= totalPages)
-  const prevBtn = Array.from({ length: 3 }, (_, index) => page - 1 - index).filter((value) => value > 0)
+  let nextBtn = Array.from({ length: 4 }, (_, i) => page + i).filter((value) => value <= totalPages)
+  let prevBtn = Array.from({ length: 3 }, (_, i) => page - 1 - i).filter((value) => value > 1)
 
   const combineArray = Array.from(new Set([...nextBtn, ...prevBtn])).sort((a, b) => a - b)
+
+  console.log(combineArray)
+
+
 
 
 
@@ -229,9 +229,7 @@ const MainTodo = () => {
     // console.log(evt.target)
   }
 
-  const paginate = (value) => {
-    if (value >= 1 && value <= totalPages) setPage(value);
-  }
+
 
 
 
@@ -314,91 +312,47 @@ const MainTodo = () => {
         dragoverHandler={dragoverHandler}
         onDragLeave={onDragLeave}
       />
-      {/* <button onClick={() => setPage((prev) => prev - 1)} style={{
-        height: 30,
-        width: 90,
-        border: '1px solid black',
-        marginLeft: 10
-      }}>
-        Prev
-      </button>
-
-      <button onClick={() => setPage((prev) => prev + 1)} style={{
-        height: 30,
-        width: 90,
-        border: '1px solid black',
-        marginLeft: 10
-      }}>
-        nextBtn
-      </button> */}
 
 
-      <div className="pagination_box" >
+
+
+      <div className="pagination_box">
+
         {
-          page > 1 && <span
-            onClick={() => paginate(page - 1)} className="pagination_start_button">
+
+          page > 1 && <div onClick={() => setPage(page - 1)}>
             ◀️
-          </span>
+          </div>
         }
 
+        <div style={{
+          display: 'flex'
+        }}>
+          {
+            combineArray?.map((value) => {
+              return <div className="perpage_box"
+                onClick={() => setPage(value)}
+                style={{
+                  backgroundColor: page === value ? "gray" : "white",
+                  color: page === value ? "white" : "gray",
+                }}
 
+              >{value}</div>
+            })
+          }
+        </div>
 
         {
-          combineArray.map((currentValue) => {
-            return <div
-              className="hover_box"
-              onClick={() => paginate(currentValue)}
-              style={{
-                backgroundColor: `${page === currentValue ? "gray" : "white"}`,
-                padding: 4,
-                border: '1px solid black',
-                width: 30,
-                textAlign: 'center',
-                color: `${page === currentValue ? "white" : "gray"}`,
 
-              }}>
-              {currentValue}
-            </div>
-          })
+          page < totalPages && <div onClick={() => setPage(page + 1)}>
+            ▶️
+          </div>
         }
-        {
-          page < totalPages && <span className="pagination_last_button"
-            onClick={() => paginate(page + 1)}>▶️</span>
-        }
+
+
 
 
       </div>
-
-
-
-      {/* <div className="pagination_box" >
-        <span
-          onClick={() => paginate(i - 1)} className="pagination_start_button">
-          ◀️
-        </span>
-
-
-        {
-          [...Array(totalPages)]?.map((_, i) => {
-            return <span
-              onClick={() => paginate(i + 1)}
-              style={{
-                backgroundColor: `${page === i + 1 ? "gray" : "white"}`,
-                padding: 4,
-                border: '1px solid black',
-                width: 30,
-                textAlign: 'center',
-                color: `${page === i + 1 ? "white" : "gray"}`,
-
-              }}>
-              {i + 1}
-            </span>
-          })
-        }
-
-        <span className="pagination_last_button"
-          onClick={() => paginate(page + 1)}>▶️</span>
-      </div> */}
 
     </>
 

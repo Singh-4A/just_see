@@ -77,7 +77,6 @@ const Chatbot = () => {
 
             })
 
-
             if (response.status === 200) {
                 setApiStatus("sucsess")
                 setStoreAiData((prev) => ([...prev, { text: response.data?.candidates[0]?.content?.parts[0]?.text, user: false }]))

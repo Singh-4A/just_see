@@ -1,40 +1,66 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 export default function Stopwatch() {
-  const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
+  const [time, setTime] = useState(0); // time in seconds
 
   useEffect(() => {
-    let timer;
+    let timerId;
     if (isRunning) {
-      timer = setInterval(() => {
-        setTime(prevTime => prevTime + 1);
-      }, 1000);
+      timerId = setInterval(() => {
+        setTime((prev) => prev + 1);
+      }, 1000); // Increment every second
     } else {
-      clearInterval(timer);
+      clearInterval(timerId);
     }
-    return () => clearInterval(timer);
+
+    return () => clearInterval(timerId);
   }, [isRunning]);
 
-  const handleStartStop = () => {
-    setIsRunning(!isRunning);
+  // Convert time to hours, minutes, seconds
+  const formatTime = (totalSeconds) => {
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+
+    const pad = (val) => String(val).padStart(2, '0');
+    return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
   };
 
-  const handleReset = () => {
+  const handleStartPause = useCallback(() => {
+    setIsRunning((prev) => !prev);
+  }, []);
+
+  const handleReset = useCallback(() => {
     setIsRunning(false);
     setTime(0);
-  };
+  }, []);
 
   return (
-    <div className="flex flex-col items-center p-4">
-      <h1 className="text-3xl mb-4">{time}s</h1>
-      <div className="flex gap-2">
-        <button onClick={handleStartStop} className="bg-blue-500 text-white p-2 rounded">
-          {isRunning ? 'Pause' : 'Start'}
-        </button>
-        <button onClick={handleReset} className="bg-red-500 text-white p-2 rounded">
-          Reset
-        </button>
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        gap: 10,
+        flexDirection: 'column',
+        textAlign: 'center',
+      }}
+    >
+      <h1>{formatTime(time)}</h1>
+      <div
+        style={{
+          display: 'flex',
+          gap: 10,
+          justifyContent: 'center',
+          cursor: 'pointer',
+        }}
+      >
+        <div onClick={handleStartPause} className="bg-blue-500 text-white p-2 rounded">
+          <button>{!isRunning ? 'Start' : 'Pause'}</button>
+        </div>
+        <div onClick={handleReset} className="bg-red-500 text-white p-2 rounded">
+          <button>Reset</button>
+        </div>
       </div>
     </div>
   );

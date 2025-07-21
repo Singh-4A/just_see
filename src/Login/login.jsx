@@ -1,23 +1,24 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./login.css";
 import { useNavigate } from "react-router"
+import { LoginApi } from "../redux/Api/loginApi";
+import { enqueueSnackbar } from "notistack";
 
 function Login() {
   const [userValue, setUserValue] = useState({
-    name: "",
-    age: "",
     email: "",
-    phone: "",
+    password: "",
   });
+
 
   const [effect, setEffect] = useState(false);
   const [error, setError] = useState({
     nameError: false,
     ageError: false,
-    phoneError: false,
+    password: false,
   });
   const inputRef = useRef(null);
-  const navigate=useNavigate()
+  const navigate = useNavigate()
 
   const onChangeHandler = (e) => {
     const { value, name } = e.target;
@@ -28,26 +29,43 @@ function Login() {
   const onSubmit = () => {
     const errors = {};
 
-    if (!userValue.name || userValue.name.trim().length === 0) {
-      errors.nameError = true;
-    }
+    // if (!userValue.name || userValue.name.trim().length === 0) {
+    //   errors.nameError = true;
+    // }
 
-    if (!userValue.age || userValue.age.trim().length === 0) {
-      errors.ageError = true;
-    }
+    // if (!userValue.age || userValue.age.trim().length === 0) {
+    //   errors.ageError = true;
+    // }
 
-    if (!userValue.phone || userValue.phone.trim().length === 0) {
-      errors.phoneError = true;
+    if (!userValue.password || userValue.password.trim().length === 0) {
+      errors.password = true;
     }
 
     if (Object.keys(errors).length > 0) {
       setError(errors);
     } else {
-      localStorage.setItem("userData", JSON.stringify(userValue));
-      navigate("/home");
+       login(userValue)
     }
   };
 
+
+
+  async function login(loginData) {
+    let response = await LoginApi(loginData)
+    if (response.status === 200) {
+      enqueueSnackbar(response?.data?.message, {
+        variant: 'success'
+      })
+      navigate("/home");
+      localStorage.setItem("token", JSON.stringify(response?.data));
+
+
+    } else if(response.status === 401) {
+      enqueueSnackbar(response.response.data.message, {
+        variant: 'error'
+      })
+    }
+  }
 
 
   useEffect(() => {
@@ -59,8 +77,9 @@ function Login() {
       <div className="form_box" onMouseEnter={() => setEffect(true)}>
         <h4 style={{ textAlign: "center", color: "aqua", padding: 10 }}>Login Form</h4>
         <hr className="hrLine" />
+
         <div className="input_box">
-          <input
+          {/* <input
             ref={inputRef}
             className="border border-blue-700 rounded-full  px-2 py-1 w-full"
             value={userValue.name}
@@ -86,9 +105,10 @@ function Login() {
           />
           {error.ageError && <h1 style={{
             color: 'red'
-          }}> Required</h1>}
+          }}> Required</h1>} */}
 
           <input
+            ref={inputRef}
             className="border border-blue-700 rounded-full  px-2 py-1 w-full"
             value={userValue.email}
             name="email"
@@ -96,16 +116,16 @@ function Login() {
             onChange={onChangeHandler}
           />
           <input
-            value={userValue.phone}
+            value={userValue.password}
             className="border border-blue-700 rounded-full  px-2 py-1 w-full"
-            name="phone"
-            placeholder="Please type here phone"
+            name="password"
+            placeholder="Please type here password"
             onChange={onChangeHandler}
             style={{
-              border: error.phoneError && "2px solid red",
+              border: error.password && "2px solid red",
             }}
           />
-          {error.phoneError && <h1 style={{
+          {error.password && <h1 style={{
             color: 'red'
           }}>Required</h1>}
         </div>

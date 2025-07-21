@@ -1,45 +1,47 @@
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from 'react'
 
-function ProgressBar({ value }) {
-  const [progressValue, setProgressValue] = useState(value);
+function progress({ value }) {
+  const [progressValue, setProgressValue] = useState(value)
 
+  console.log(progressValue, "progressValue")
   useEffect(() => {
-    if (progressValue <= 100)
-      setProgressValue(Math.min(100, Math.max(0, value)))
-
-  }, [value]);
+    setProgressValue(Math.min(100, Math.max(0, value)))
+  }, [value])
 
   return (
     <div style={{
-      position: "relative",
+      height: 40,
       width: 400,
-      height: 50,
-      border: "1px solid black",
+      position: "relative",
       margin: 'auto',
-      marginTop: 10,
-      borderRadius: 50
+      border: "1px solid black",
+      borderRadius: 50,
+      marginTop: 20
     }}>
       <div style={{
         position: 'absolute',
-        left: "50%",
-        top: "24%",
-        color: progressValue < 50 ? "black" : "white"
+        left: "40%",
+        top: -5,
+        transform: "translate(50% ,50%)",
+        color: progressValue > 50 ? "white" : "black"
       }}>
-        {value}%
+        {progressValue}%
+
       </div>
       <div style={{
-        background: '#00ff4e',
+        height: 40,
         width: `${progressValue}%`,
-        height: "100%",
+        backgroundColor: '#2769ab',
         borderRadius: 50
-
       }}>
-
-
       </div>
-      {progressValue < 100 ? "Loading..." : "Complete"}
+      <div style={{
+        textAlign:'center'
+      }}> 
+        {progressValue >= 100 ? "Compalte" : "Loading..."}
+      </div>
     </div>
-  );
+  )
 }
 
-export default ProgressBar;
+export default progress

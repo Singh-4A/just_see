@@ -23,6 +23,7 @@
     "antd": "^5.26.0",
     "axios": "^1.9.0",
     "date-fns": "^4.1.0",
+    "formik": "^2.4.6",
     "lucide-react": "^0.523.0",
     "motion": "^12.18.1",
     "notistack": "^3.0.2",

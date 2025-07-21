@@ -2,7 +2,11 @@
   display: grid;
   place-items: center;
   height: 91vh;
-  background-color: black;
+  background-image: url("../src//assets/image.webp");
+  background-attachment: fixed;
+  background-position: center;
+  /* background-repeat: no-repeat; */
+  /* background-size: 100%; */
 }
 
 .form_box {
@@ -10,8 +14,10 @@
   border: 1px solid blueviolet;
   border-radius: 20px;
   box-shadow: -1px 1px 10px 8px #61c7c6;
-  min-height: 293px;
+  min-height: 220px;
   max-height: 462px;
+  background-color: black;
+  color: white;
 
 }
 
@@ -48,9 +54,10 @@
 .login_button>button {
   width: 130px;
   border-radius: 20px;
-  
+
 }
-.login_button :hover{
+
+.login_button :hover {
   background-color: blue;
   color: white;
 }

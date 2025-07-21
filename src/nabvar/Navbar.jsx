@@ -8,6 +8,7 @@ import DragAndDropList from "../draganddrop/drangAndDrop";
 import { AutoComponent } from "../autocomponent/autoComponent";
 import Chatbot from "../Chatbot/AiChatbot";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import Signup from "../signup/signup";
 
 const Stopwatch = lazy(() => import("../Stopwatch/Stopwatch"));
 const MainTodo = lazy(() => import("../orgnigim/Todo/MainTodo"));
@@ -24,7 +25,7 @@ export default function Navbar() {
 const navigate = useNavigate()
 
   useEffect(() => {
-    const getData = JSON.parse(localStorage.getItem("userData"))
+    const getData = JSON.parse(localStorage.getItem("token"))
     if (getData === null) {
       navigate("/login")
     }
@@ -39,6 +40,7 @@ const navigate = useNavigate()
             <Route index element={<Home />} />
             <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
             <Route path="/traffic" element={<TrafficLight />} />
             <Route path="/autocomplete" element={<AutoComponent />} />
             <Route path="/progress" element={<ProgressMain />} />
