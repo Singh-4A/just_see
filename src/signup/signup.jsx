@@ -16,6 +16,7 @@ const Signup = () => {
 
   const [errors, setErrors] = useState({});
   let [showPassword, setShowPassword] = useState(false)
+  const [loading, setLoading] = useState("")
   const navigate = useNavigate();
 
   const inputData = [
@@ -45,14 +46,16 @@ const Signup = () => {
 
   const handelSubmit = async () => {
     if (!validateForm()) return;
-
+    setLoading("loading")
     const response = await SignupApi(inputValue);
     if (response.status === 201) {
+      setLoading("")
       enqueueSnackbar(response?.data?.message, { variant: 'success' });
       localStorage.setItem('token', JSON.stringify(response?.data));
       setValue({ name: '', age: '', email: '', phone: '', password: '' });
       navigate('/home');
     } else {
+      setLoading("")
       enqueueSnackbar(response.response?.data?.message || 'Signup failed', {
         variant: 'error',
       });
@@ -108,7 +111,17 @@ const Signup = () => {
           onClick={handelSubmit}
           className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg mt-4 transition"
         >
-          Submit
+          {
+            loading !== "loading" && " Submit"
+          }
+
+          {
+            loading === "loading" &&
+            <div class="flex items-center justify-center ">
+              <div class="w-6 h-6 border-4 border-dashed rounded-full animate-spin border-white-500"></div>
+            </div>
+          }
+
         </button>
       </div>
     </div>

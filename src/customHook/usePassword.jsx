@@ -5,8 +5,11 @@ function usePassword(setIsShowPassword = () => { }) {
     const [showPassword, setPassword] = useState(false)
 
     function showPasswordHandler() {
-        setPassword((prev) => !prev)
-        setIsShowPassword(showPassword)
+        setPassword((prev) => {
+            const next = !prev
+            setIsShowPassword(next)
+            return next
+        })
     }
 
     return (

@@ -10,6 +10,7 @@ function Login() {
   const [userValue, setUserValue] = useState({ email: "", password: "" });
   const [error, setError] = useState({ email: false, password: false });
   const [isShowPassword, setIsShowPassword] = useState(false)
+  const [loading, setLoading] = useState("")
   const inputRef = useRef(null);
   const navigate = useNavigate();
 
@@ -43,13 +44,15 @@ function Login() {
 
   const onSubmit = async () => {
     if (!validate()) return;
-
+    setLoading("loading")
     const response = await LoginApi(userValue);
     if (response.status === 200) {
+      setLoading("")
       enqueueSnackbar(response?.data?.message, { variant: "success" });
       localStorage.setItem("token", JSON.stringify(response?.data));
       navigate("/home");
     } else if (response.status === 401) {
+      setLoading("")
       enqueueSnackbar(response?.response?.data?.message, { variant: "error" });
     }
   };
@@ -116,8 +119,19 @@ function Login() {
             onClick={onSubmit}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition"
           >
-            Login
+            {
+              loading !== "loading" && " Login"
+            }
+
+            {
+              loading === "loading" &&
+              <div class="flex items-center justify-center ">
+                <div class="w-6 h-6 border-4 border-dashed rounded-full animate-spin border-white-500"></div>
+              </div>
+            }
           </button>
+
+
         </div>
       </div>
     </div>
