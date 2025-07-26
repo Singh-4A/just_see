@@ -55,12 +55,12 @@ const MainTodo = () => {
 
 
 
-  let nextBtn = Array.from({ length: 4 }, (_, i) => page + i).filter((value) => value <= totalPages)
-  let prevBtn = Array.from({ length: 3 }, (_, i) => page - 1 - i).filter((value) => value > 1)
+  let next = Array.from({ length: 4 }, (_, i) => page + i).filter((value) => value <= totalPages)
+  let prev = Array.from({ length: 3 }, (_, i) => i - 1 - page).filter((value) => value > 1)
 
-  const combineArray = Array.from(new Set([...nextBtn, ...prevBtn])).sort((a, b) => a - b)
+  let combineArray = Array.from(new Set([...next, ...prev])).sort((a, b) => a - b)
 
-  console.log(combineArray)
+
 
 
 
@@ -314,45 +314,47 @@ const MainTodo = () => {
       />
 
 
+      {
+        totalCount > 10 && <div className="pagination_box">
 
-
-      <div className="pagination_box">
-
-        {
-
-          page > 1 && <div onClick={() => setPage(page - 1)}>
-            ◀️
-          </div>
-        }
-
-        <div style={{
-          display: 'flex'
-        }}>
           {
-            combineArray?.map((value) => {
-              return <div className="perpage_box"
-                onClick={() => setPage(value)}
-                style={{
-                  backgroundColor: page === value ? "gray" : "white",
-                  color: page === value ? "white" : "gray",
-                }}
 
-              >{value}</div>
-            })
+            page > 1 && <div onClick={() => setPage(page - 1)}>
+              ◀️
+            </div>
           }
+
+          <div style={{
+            display: 'flex'
+          }}>
+            {
+              combineArray?.map((value) => {
+                return <div className="perpage_box"
+                  onClick={() => setPage(value)}
+                  style={{
+                    backgroundColor: page === value ? "gray" : "white",
+                    color: page === value ? "white" : "gray",
+                  }}
+
+                >{value}</div>
+              })
+            }
+          </div>
+
+          {
+
+            page < totalPages && <div onClick={() => setPage(page + 1)}>
+              ▶️
+            </div>
+          }
+
+
+
+
         </div>
 
-        {
+      }
 
-          page < totalPages && <div onClick={() => setPage(page + 1)}>
-            ▶️
-          </div>
-        }
-
-
-
-
-      </div>
 
     </>
 

@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 function progress({ value }) {
   const [progressValue, setProgressValue] = useState(value)
 
-  console.log(progressValue, "progressValue")
   useEffect(() => {
     setProgressValue(Math.min(100, Math.max(0, value)))
   }, [value])

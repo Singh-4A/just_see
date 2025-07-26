@@ -5,14 +5,7 @@
 @tailwind utilities;
 
 /* src/App.css */
-body {
-  margin: 0;
-  background-color: #f5f7fa;
-  /* color: #333; */
-  
-  
-  
-}
+
 
 
 
@@ -21,5 +14,4 @@ body {
   margin: 0px;
   box-sizing: border-box;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
 }
