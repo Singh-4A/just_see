@@ -88,7 +88,6 @@ const Layout = () => {
     localStorage.clear();
   }
 
-  console.log(userData)
 
   return (
     <>
