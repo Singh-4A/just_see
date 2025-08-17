@@ -2,8 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LoginApi } from "../redux/Api/loginApi";
 import { enqueueSnackbar } from "notistack";
-import { HideEyeIcon, ShowEyeIcon } from "../svg";
 import usePassword from "../customHook/usePassword";
+import { GoogleAuthLogin } from "../googleAouth/Login";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 
 function Login() {
@@ -13,6 +14,8 @@ function Login() {
   const [loading, setLoading] = useState("")
   const inputRef = useRef(null);
   const navigate = useNavigate();
+
+
 
   useEffect(() => {
     inputRef.current.focus();
@@ -116,6 +119,7 @@ function Login() {
           </div>
 
           <button
+            disabled={loading === "loading"}
             onClick={onSubmit}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition"
           >
@@ -130,6 +134,10 @@ function Login() {
               </div>
             }
           </button>
+
+       
+            <GoogleAuthLogin />
+       
 
 
         </div>
